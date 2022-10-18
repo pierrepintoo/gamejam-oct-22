@@ -1,9 +1,8 @@
 import React from "react";
-import { useEffect } from "react";
-import Phaser, {GameObjects} from "phaser";
-import PhaserMatterCollisionPlugin from "phaser-matter-collision-plugin";
+import Phaser from "phaser";
 import getKeyDatas from "./getKeyDatas";
-import Ground, { rotateGround } from "./Ground";
+import { rotateGround } from "./Ground";
+import { loadImages } from "./Loader";
 
 const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
@@ -39,10 +38,10 @@ const Game = ({mousePos}) => {
         backgroundColor: "#fff",
         physics: {
           default: 'arcade',
-          matter: {
+          arcade: {
               debug: false,
               gravity: {
-                  y: 0.3
+                  y: 10
               },
           }
         },
@@ -50,6 +49,7 @@ const Game = ({mousePos}) => {
         },
         scene: {
             preload: function() {
+              loadImages(this)
             },
             create: function() {
               const inputs = getKeyDatas(this)
@@ -57,6 +57,9 @@ const Game = ({mousePos}) => {
               keyS = inputs.keyS
 
               ground = this.add.graphics();
+
+              this.physics.add.image(100, 100, 'galette')
+              
             },
             update: function(time, delta) {
               ground.clear();
