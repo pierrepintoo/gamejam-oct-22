@@ -7,14 +7,21 @@ function App() {
   const [mousePos, setMousePos] = useState({x: 0, y: 0})
 
   const handleMouseMove = (e) => {
-    console.log(e)
+    // console.log(e.clientX)
+    let newMousePos = {
+      x: e.clientX,
+      y: e.clientY
+    }
+    setMousePos(newMousePos)
   }
   return (
     <div 
       className="App"
       onMouseMove={(e) => handleMouseMove(e)}
       >
-      <Game />
+      <Game 
+        mousePos={mousePos}
+      />
     </div>
   );
 }
