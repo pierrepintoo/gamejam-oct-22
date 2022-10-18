@@ -2,9 +2,9 @@ let angleCount = 0
 
 export const rotateGround = (graphics, keyA, keyS, windowW, windowH) => {
     const anchorLineX = windowW / 2
-    const anchorLineY = windowH / 2 + 300
-    const startLineX = -anchorLineX
-    const endLineX = anchorLineX
+    const anchorLineY = windowH / 2 + 300 // + 300 to put down the platform
+    const startLineX = -anchorLineX - 400
+    const endLineX = anchorLineX + 400
 
     if(keyA.isDown) {
         console.log('A key pressed')

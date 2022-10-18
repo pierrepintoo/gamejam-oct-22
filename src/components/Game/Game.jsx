@@ -9,7 +9,7 @@ const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
-  let line, graphics
+  let line, ground
   let keyA;
   let keyS;
 
@@ -56,12 +56,12 @@ const Game = ({mousePos}) => {
               keyA = inputs.keyA
               keyS = inputs.keyS
 
-              graphics = this.add.graphics();
+              ground = this.add.graphics();
             },
             update: function(time, delta) {
-              graphics.clear();;
+              ground.clear();
 
-              rotateGround(graphics, keyA, keyS, windowW, windowH)
+              rotateGround(ground, keyA, keyS, windowW, windowH)
 
             },
             render: function() {
