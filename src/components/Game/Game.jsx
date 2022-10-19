@@ -2,10 +2,13 @@ import React from "react";
 import Phaser from "phaser";
 import getKeyDatas from "./getKeyDatas";
 import { rotateGround, resetAngle } from "./Ground";
-import { loadImages } from "./Loader";
+import { loadImages, loadSounds } from "./Loader";
 import { getGalette } from "./Galette";
 import { setBackground } from "./Background";
 import Axis from "axis-api";
+import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
+import SoundFade from 'phaser3-rex-plugins/plugins/soundfade.js';
+
 
 const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
@@ -20,7 +23,9 @@ const Game = ({mousePos}) => {
   const positionPlatform3 = {x: 400, y: 900}
   const positionPlatform4 = {x: 700, y: 1400}
   const joystick = {x: 0, y: 0}
-
+  let ambiance
+  const ambianceVolume = 0.5
+  let isPlaying = false
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
 
@@ -30,11 +35,10 @@ const Game = ({mousePos}) => {
   const joystickMoveHandler = (e) => {
     // Get the joystick id in the event payload object
     if (e.id === 1) {
-        console.log(e.position.x, e.position.y)
         joystick.x = e.position.x
         joystick.y = e.position.y
         // if (e.position.x === 1) console.log('1')
-    } 
+    }
   }
 
   let jumpingCount = 0
@@ -74,10 +78,16 @@ const Game = ({mousePos}) => {
           }
         },
         plugins: {
+          global: [{
+            key: 'rexSoundFade',
+            plugin: SoundFadePlugin,
+            start: true
+          }]
         },
         scene: {
             preload: function() {
               loadImages(this)
+              loadSounds(this)
             },
             create: function() {
               const inputs = getKeyDatas(this)
@@ -90,7 +100,6 @@ const Game = ({mousePos}) => {
 
               galetteCollideListener()
 
-              // jumpingGaletteListiner(this, galette)
 
               setBackground(this, windowW, windowH)
               
@@ -104,9 +113,18 @@ const Game = ({mousePos}) => {
                   jumpGalette()
                 }
               })
+              ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
 
             },
             update: function(time, delta) {
+
+              // Audio
+              if (isPlaying === false) {
+                SoundFade.fadeIn(this, ambiance, 30000, ambianceVolume, 0, {loop:true});
+                console.log('play')
+                this.sound.unlock();
+                isPlaying = true
+            }
               gamepadEmulator.update();
               switch(activePlatform) {
                 case 'platform_1':
@@ -114,28 +132,28 @@ const Game = ({mousePos}) => {
                     resetAngle()
                     isPlatform1Resetted = true
                   }
-                  rotateGround(platform1, keyA, keyS, positionPlatform1.x, positionPlatform1.y, joystick)
+                  rotateGround(this, platform1, keyA, keyS, positionPlatform1.x, positionPlatform1.y, joystick)
                 break
                 case 'platform_2':
                   if (isPlatform2Resetted === false) {
                     resetAngle()
                     isPlatform2Resetted = true
                   }
-                  rotateGround(platform2, keyA, keyS, positionPlatform2.x, positionPlatform2.y, joystick)
+                  rotateGround(this, platform2, keyA, keyS, positionPlatform2.x, positionPlatform2.y, joystick)
                 break
                 case 'platform_3':
                   if (isPlatform3Resetted === false) {
                     resetAngle()
                     isPlatform3Resetted = true
                   }
-                  rotateGround(platform3, keyA, keyS, positionPlatform3.x, positionPlatform3.y, joystick)
+                  rotateGround(this, platform3, keyA, keyS, positionPlatform3.x, positionPlatform3.y, joystick)
                 break
                 case 'platform_4':
                   if (isPlatform4Resetted === false) {
                     resetAngle()
                     isPlatform4Resetted = true
                   }
-                  rotateGround(platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y, joystick)
+                  rotateGround(this, platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y, joystick)
                 break
                 default:
                   break
@@ -205,6 +223,13 @@ const Game = ({mousePos}) => {
         }
       })
     }
+
+    // const playAmbianceAudio = (game) => {
+    //   const ambiance = game.sound.add('ambiance');
+
+    //   ambiance.play()
+
+    // }
 
     usePhaserGame(config)
 

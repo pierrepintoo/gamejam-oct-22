@@ -7,4 +7,10 @@ const loadImages = (game) => {
     const bg = game.load.image('bg', 'assets/bg/montagne.png')
 }
 
-export { loadImages }
+const loadSounds = (game) => {
+    game.load.plugin('rexsoundfadeplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexsoundfadeplugin.min.js', true);
+    const ambiance = game.load.audio('ambiance', ['assets/audio/ambiance/ambiance.mp3']);
+
+}
+
+export { loadImages, loadSounds }
