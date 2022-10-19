@@ -1,6 +1,6 @@
 let angleCount = 0
 
-export const rotateGround = (graphics, keyA, keyS, windowW, windowH) => {
+export const rotateGround = (graphics, keyA, keyS, windowW, windowH, joystickData) => {
     const anchorLineX = windowW / 2
     const anchorLineY = windowH / 2 + 300 // + 300 to put down the platform
     const startLineX = -anchorLineX - 400
@@ -11,6 +11,8 @@ export const rotateGround = (graphics, keyA, keyS, windowW, windowH) => {
     } else if(keyS.isDown) {
         angleCount -= 1
     }
+
+    angleCount += joystickData.x
     graphics.angle = angleCount * 0.3
 }
 
