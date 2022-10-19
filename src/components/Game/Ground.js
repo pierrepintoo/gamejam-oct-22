@@ -35,3 +35,54 @@ export const resetAngle = () => {
 }
 
 
+let isPlatform1Resetted = false, isPlatform2Resetted = false, isPlatform3Resetted = false, isPlatform4Resetted = false
+
+export const switchRotationPlatform = (
+    game,
+    activePlatform,
+    platform1,
+    platform2,
+    platform3,
+    platform4,
+    keyA,
+    keyS,
+    positionPlatform1,
+    positionPlatform2,
+    positionPlatform3,
+    positionPlatform4,
+    joystick
+) => {
+    switch(activePlatform) {
+        case 'platform_1':
+          if (isPlatform1Resetted === false) {
+            resetAngle()
+            isPlatform1Resetted = true
+          }
+          rotateGround(game, platform1, keyA, keyS, positionPlatform1.x, positionPlatform1.y, joystick)
+        break
+        case 'platform_2':
+          if (isPlatform2Resetted === false) {
+            resetAngle()
+            isPlatform2Resetted = true
+          }
+          rotateGround(game, platform2, keyA, keyS, positionPlatform2.x, positionPlatform2.y, joystick)
+        break
+        case 'platform_3':
+          if (isPlatform3Resetted === false) {
+            resetAngle()
+            isPlatform3Resetted = true
+          }
+          rotateGround(game, platform3, keyA, keyS, positionPlatform3.x, positionPlatform3.y, joystick)
+        break
+        case 'platform_4':
+          if (isPlatform4Resetted === false) {
+            resetAngle()
+            isPlatform4Resetted = true
+          }
+          rotateGround(game, platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y, joystick)
+        break
+        default:
+          break
+      }
+}
+

@@ -1,14 +1,13 @@
 import React from "react";
 import Phaser from "phaser";
 import getKeyDatas from "./getKeyDatas";
-import { rotateGround, resetAngle } from "./Ground";
+import { rotateGround, resetAngle, switchRotationPlatform } from "./Ground";
 import { loadImages, loadSounds } from "./Loader";
 import { getGalette } from "./Galette";
 import { setBackground } from "./Background";
 import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
-import SoundFade from 'phaser3-rex-plugins/plugins/soundfade.js';
-
+import { setAmbianceAudioOnStart } from "./Audio";
 
 const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
@@ -16,7 +15,6 @@ const Game = ({mousePos}) => {
   const windowW = window.innerWidth
   let line, ground, galette, platform1, platform2, platform3, platform4
   let keyA, keyS, keyD, keySPACE
-  let isPlatform1Resetted = false, isPlatform2Resetted = false, isPlatform3Resetted = false, isPlatform4Resetted = false
   let activePlatform = ""
   const positionPlatform1 = {x: 500, y: 100}
   const positionPlatform2 = {x: 800, y: 500}
@@ -25,7 +23,6 @@ const Game = ({mousePos}) => {
   const joystick = {x: 0, y: 0}
   let ambiance
   const ambianceVolume = 0.5
-  let isPlaying = false
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
 
@@ -117,48 +114,29 @@ const Game = ({mousePos}) => {
               console.log(galette.body.velocity)
             },
             update: function(time, delta) {
+              // Galette that rotate with velocity (because friction = 0)
               setRotationWithVelocity()
               
               // Audio
-              if (isPlaying === false) {
-                SoundFade.fadeIn(this, ambiance, 30000, ambianceVolume, 0, {loop:true});
-                console.log('play')
-                this.sound.unlock();
-                isPlaying = true
-            }
-              gamepadEmulator.update();
-              switch(activePlatform) {
-                case 'platform_1':
-                  if (isPlatform1Resetted === false) {
-                    resetAngle()
-                    isPlatform1Resetted = true
-                  }
-                  rotateGround(this, platform1, keyA, keyS, positionPlatform1.x, positionPlatform1.y, joystick)
-                break
-                case 'platform_2':
-                  if (isPlatform2Resetted === false) {
-                    resetAngle()
-                    isPlatform2Resetted = true
-                  }
-                  rotateGround(this, platform2, keyA, keyS, positionPlatform2.x, positionPlatform2.y, joystick)
-                break
-                case 'platform_3':
-                  if (isPlatform3Resetted === false) {
-                    resetAngle()
-                    isPlatform3Resetted = true
-                  }
-                  rotateGround(this, platform3, keyA, keyS, positionPlatform3.x, positionPlatform3.y, joystick)
-                break
-                case 'platform_4':
-                  if (isPlatform4Resetted === false) {
-                    resetAngle()
-                    isPlatform4Resetted = true
-                  }
-                  rotateGround(this, platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y, joystick)
-                break
-                default:
-                  break
-              }
+              setAmbianceAudioOnStart(this, ambiance, ambianceVolume)
+
+              // Set active platforms that can rotate
+              switchRotationPlatform(
+                this,
+                activePlatform,
+                platform1,
+                platform2,
+                platform3,
+                platform4,
+                keyA,
+                keyS,
+                positionPlatform1,
+                positionPlatform2,
+                positionPlatform3,
+                positionPlatform4,
+                joystick
+              )
+
             },
             render: function() {
               this.game.debug.geom(line)
@@ -199,11 +177,7 @@ const Game = ({mousePos}) => {
       game.cameras.main.zoom = 2
       // game.cameras.main.zoom = 0.5
     }
-
-    const jumpingGaletteListiner = (game) => {
-      game.input.keyboard.on('keydown-SPACE', () => jumpGalette());
-    }
-
+    
     const jumpGalette = () => {
       console.log('coucou', jumpingCount)
       if (jumpingCount < 2) {
