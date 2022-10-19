@@ -14,6 +14,7 @@ const Game = ({mousePos}) => {
   const windowH = window.innerHeight
   const windowW = window.innerWidth
   let line, ground, galette, platform1, platform2, platform3, platform4
+  let isPlatform1Actived = false, isPlatform2Actived = false, isPlatform3Actived = false, isPlatform4Actived = false
   let keyA, keyS, keyD, keySPACE
   let activePlatform = ""
   const positionPlatform1 = {x: 500, y: 100}
@@ -97,7 +98,6 @@ const Game = ({mousePos}) => {
 
               galetteCollideListener()
 
-
               setBackground(this, windowW, windowH)
               
               setPlatformOnScene(this)
@@ -177,7 +177,7 @@ const Game = ({mousePos}) => {
       game.cameras.main.zoom = 2
       // game.cameras.main.zoom = 0.5
     }
-    
+
     const jumpGalette = () => {
       console.log('coucou', jumpingCount)
       if (jumpingCount < 2) {
@@ -189,28 +189,25 @@ const Game = ({mousePos}) => {
     const galetteCollideListener = () => {
       galette.setOnCollide((e) => {
         const platformName = e.bodyB.gameObject.texture.key
-        if (platformName === "platform_1") {
+        if (platformName === "platform_1" && isPlatform1Actived === false) {
+          isPlatform1Actived = true
           jumpingCount = 0
           activePlatform = 'platform_1'
-        } else if (platformName === "platform_2") {
+        } else if (platformName === "platform_2" && isPlatform2Actived === false) {
+          isPlatform2Actived = true
           jumpingCount = 0
           activePlatform = 'platform_2'
-        } else if (platformName === "platform_3") {
+        } else if (platformName === "platform_3" && isPlatform3Actived === false) {
+          isPlatform3Actived = true
           jumpingCount = 0
           activePlatform = 'platform_3'
-        } else if (platformName === "platform_4") {
+        } else if (platformName === "platform_4" && isPlatform4Actived === false) {
+          isPlatform4Actived = true
           activePlatform = 'platform_4'
           jumpingCount = 0
         }
       })
     }
-
-    // const playAmbianceAudio = (game) => {
-    //   const ambiance = game.sound.add('ambiance');
-
-    //   ambiance.play()
-
-    // }
 
     usePhaserGame(config)
 
