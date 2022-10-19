@@ -19,6 +19,7 @@ const Game = ({mousePos}) => {
   const positionPlatform2 = {x: 800, y: 500}
   const positionPlatform3 = {x: 400, y: 900}
   const positionPlatform4 = {x: 700, y: 1400}
+  const joystick = {x: 0, y: 0}
 
   // For Joystick
   const gamepadEmulator = Axis.createGamepadEmulator(0)
@@ -27,6 +28,8 @@ const Game = ({mousePos}) => {
     // Get the joystick id in the event payload object
     if (e.id === 1) {
         console.log(e.position.x, e.position.y)
+        joystick.x = e.position.x
+        joystick.y = e.position.y
         // if (e.position.x === 1) console.log('1')
     } 
   }
@@ -102,28 +105,28 @@ const Game = ({mousePos}) => {
                     resetAngle()
                     isPlatform1Resetted = true
                   }
-                  rotateGround(platform1, keyA, keyS, positionPlatform1.x, positionPlatform1.y)
+                  rotateGround(platform1, keyA, keyS, positionPlatform1.x, positionPlatform1.y, joystick)
                 break
                 case 'platform_2':
                   if (isPlatform2Resetted === false) {
                     resetAngle()
                     isPlatform2Resetted = true
                   }
-                  rotateGround(platform2, keyA, keyS, positionPlatform2.x, positionPlatform2.y)
+                  rotateGround(platform2, keyA, keyS, positionPlatform2.x, positionPlatform2.y, joystick)
                 break
                 case 'platform_3':
                   if (isPlatform3Resetted === false) {
                     resetAngle()
                     isPlatform3Resetted = true
                   }
-                  rotateGround(platform3, keyA, keyS, positionPlatform3.x, positionPlatform3.y)
+                  rotateGround(platform3, keyA, keyS, positionPlatform3.x, positionPlatform3.y, joystick)
                 break
                 case 'platform_4':
                   if (isPlatform4Resetted === false) {
                     resetAngle()
                     isPlatform4Resetted = true
                   }
-                  rotateGround(platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y)
+                  rotateGround(platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y, joystick)
                 break
                 default:
                   break
