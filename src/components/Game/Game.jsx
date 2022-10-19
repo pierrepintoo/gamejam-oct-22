@@ -21,6 +21,9 @@ const Game = ({mousePos}) => {
   const positionPlatform4 = {x: 700, y: 1400}
   const joystick = {x: 0, y: 0}
 
+  //Map key axis
+  Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
+
   // For Joystick
   const gamepadEmulator = Axis.createGamepadEmulator(0)
   Axis.joystick1.setGamepadEmulatorJoystick(gamepadEmulator, 0)
@@ -33,7 +36,6 @@ const Game = ({mousePos}) => {
         // if (e.position.x === 1) console.log('1')
     } 
   }
-  Axis.addEventListener("joystick:move", joystickMoveHandler);
 
   let jumpingCount = 0
 
@@ -95,6 +97,8 @@ const Game = ({mousePos}) => {
               setPlatformOnScene(this)
 
               setCamerasParams(this, galette)
+
+              Axis.addEventListener("joystick:move", joystickMoveHandler);
 
             },
             update: function(time, delta) {
@@ -161,9 +165,9 @@ const Game = ({mousePos}) => {
     }
 
     const setCamerasParams = (game, objectToFollow) => {
-      // game.cameras.main.startFollow(objectToFollow) 
-      // game.cameras.main.zoom = 2
-      game.cameras.main.zoom = 0.5
+      game.cameras.main.startFollow(objectToFollow) 
+      game.cameras.main.zoom = 2
+      // game.cameras.main.zoom = 0.5
     }
 
     const jumpingGaletteListiner = (game, galette) => {
