@@ -193,6 +193,12 @@ const Game = ({mousePos}) => {
 
     usePhaserGame(config)
 
+  function updateForArcadeBorne() {
+    gamepadEmulator.update();
+    requestAnimationFrame(updateForArcadeBorne);
+  }
+  updateForArcadeBorne();
+
     return (
         <div>
             
