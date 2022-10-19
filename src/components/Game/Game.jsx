@@ -170,9 +170,9 @@ const Game = ({mousePos}) => {
     }
 
     const setCamerasParams = (game, objectToFollow) => {
-      // game.cameras.main.startFollow(objectToFollow) 
-      // game.cameras.main.zoom = 2
-      game.cameras.main.zoom = 0.5
+      game.cameras.main.startFollow(objectToFollow) 
+      game.cameras.main.zoom = 2
+      // game.cameras.main.zoom = 0.5
     }
 
     const jumpingGaletteListiner = (game) => {
