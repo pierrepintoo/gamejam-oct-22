@@ -21,7 +21,7 @@ const Game = ({mousePos}) => {
   const positionPlatform4 = {x: 700, y: 1400}
   const joystick = {x: 0, y: 0}
 
-  //Map key axis
+  // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
 
   // For Joystick
@@ -90,7 +90,7 @@ const Game = ({mousePos}) => {
 
               galetteCollideListener()
 
-              jumpingGaletteListiner(this, galette)
+              // jumpingGaletteListiner(this, galette)
 
               setBackground(this, windowW, windowH)
               
@@ -99,6 +99,11 @@ const Game = ({mousePos}) => {
               setCamerasParams(this, galette)
 
               Axis.addEventListener("joystick:move", joystickMoveHandler);
+              Axis.addEventListener("keydown", (e) => {
+                if (e.key === "a") {
+                  jumpGalette()
+                }
+              })
 
             },
             update: function(time, delta) {
@@ -165,18 +170,21 @@ const Game = ({mousePos}) => {
     }
 
     const setCamerasParams = (game, objectToFollow) => {
-      game.cameras.main.startFollow(objectToFollow) 
-      game.cameras.main.zoom = 2
-      // game.cameras.main.zoom = 0.5
+      // game.cameras.main.startFollow(objectToFollow) 
+      // game.cameras.main.zoom = 2
+      game.cameras.main.zoom = 0.5
     }
 
-    const jumpingGaletteListiner = (game, galette) => {
-      game.input.keyboard.on('keydown-SPACE', () => {
-          if (jumpingCount < 2) {
-            jumpingCount += 1
-            galette.setVelocityY(-7.5)
-          }
-        });
+    const jumpingGaletteListiner = (game) => {
+      game.input.keyboard.on('keydown-SPACE', () => jumpGalette());
+    }
+
+    const jumpGalette = () => {
+      console.log('coucou', jumpingCount)
+      if (jumpingCount < 2) {
+        jumpingCount += 1
+        galette.setVelocityY(-7.5)
+      }
     }
 
     const galetteCollideListener = () => {
