@@ -5,6 +5,7 @@ import { rotateGround, resetAngle } from "./Ground";
 import { loadImages } from "./Loader";
 import { getGalette } from "./Galette";
 import { setBackground } from "./Background";
+import Axis from "axis-api";
 
 const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
@@ -18,7 +19,19 @@ const Game = ({mousePos}) => {
   const positionPlatform2 = {x: 800, y: 500}
   const positionPlatform3 = {x: 400, y: 900}
   const positionPlatform4 = {x: 700, y: 1400}
-  
+
+  // For Joystick
+  const gamepadEmulator = Axis.createGamepadEmulator(0)
+  Axis.joystick1.setGamepadEmulatorJoystick(gamepadEmulator, 0)
+  const joystickMoveHandler = (e) => {
+    // Get the joystick id in the event payload object
+    if (e.id === 1) {
+        console.log(e.position.x, e.position.y)
+        // if (e.position.x === 1) console.log('1')
+    } 
+  }
+  Axis.addEventListener("joystick:move", joystickMoveHandler);
+
   let jumpingCount = 0
 
   const usePhaserGame = (config) => {
@@ -82,6 +95,7 @@ const Game = ({mousePos}) => {
 
             },
             update: function(time, delta) {
+              gamepadEmulator.update();
               switch(activePlatform) {
                 case 'platform_1':
                   if (isPlatform1Resetted === false) {
