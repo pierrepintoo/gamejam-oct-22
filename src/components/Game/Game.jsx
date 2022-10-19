@@ -3,7 +3,7 @@ import Phaser from "phaser";
 import getKeyDatas from "./getKeyDatas";
 import { rotateGround, resetAngle, switchRotationPlatform } from "./Ground";
 import { loadImages, loadSounds } from "./Loader";
-import { getGalette } from "./Galette";
+import { getGalette, getGaletteImage } from "./Galette";
 import { setBackground } from "./Background";
 import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
@@ -13,10 +13,13 @@ const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
-  let line, ground, galette, platform1, platform2, platform3, platform4
+  let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4
   let isPlatform1Actived = false, isPlatform2Actived = false, isPlatform3Actived = false, isPlatform4Actived = false
   let keyA, keyS, keyD, keySPACE
   let activePlatform = ""
+  let scaleXY = 0.09
+  let scaleX = 0.09
+  let scaleY = 0.09
   const positionPlatform1 = {x: 500, y: 100}
   const positionPlatform2 = {x: 800, y: 500}
   const positionPlatform3 = {x: 400, y: 900}
@@ -94,7 +97,7 @@ const Game = ({mousePos}) => {
               keyD = inputs.keyD
 
 
-              galette = getGalette(this, galette)
+              galette = getGalette(this, scaleXY)
 
               galetteCollideListener()
 
@@ -111,11 +114,19 @@ const Game = ({mousePos}) => {
                 }
               })
               ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
-              console.log(galette.body.velocity)
+              galetteImage = getGaletteImage()
             },
             update: function(time, delta) {
               // Galette that rotate with velocity (because friction = 0)
               setRotationWithVelocity()
+              // console.log(galetteImage.scaleX)
+              // galetteImage.scaleX = Math.abs(galette.body.velocity.x) * 10
+              // galetteImage.scaleX = 1
+              // console.log(galette.scale)
+              if (galette.body.velocity) {
+                galetteImage.scaleX = scaleX * (Math.abs(galette.body.velocity.x * 0.1) + 1 )
+                galetteImage.scaleY = scaleY * (Math.abs(galette.body.velocity.y * 0.1) + 1 )
+              }   
               
               // Audio
               setAmbianceAudioOnStart(this, ambiance, ambianceVolume)
@@ -179,7 +190,7 @@ const Game = ({mousePos}) => {
     }
 
     const jumpGalette = () => {
-      console.log('coucou', jumpingCount)
+      console.log(jumpingCount)
       if (jumpingCount < 2) {
         jumpingCount += 1
         galette.setVelocityY(-7.5)
@@ -204,6 +215,14 @@ const Game = ({mousePos}) => {
         } else if (platformName === "platform_4" && isPlatform4Actived === false) {
           isPlatform4Actived = true
           activePlatform = 'platform_4'
+          jumpingCount = 0
+        } else if (platformName === "platform_1") {
+          jumpingCount = 0
+        } else if (platformName === "platform_2") {
+          jumpingCount = 0
+        } else if (platformName === "platform_3") {
+          jumpingCount = 0
+        } else if (platformName === "platform_4") {
           jumpingCount = 0
         }
       })
