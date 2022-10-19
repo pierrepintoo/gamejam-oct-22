@@ -114,10 +114,11 @@ const Game = ({mousePos}) => {
                 }
               })
               ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
-
+              console.log(galette.body.velocity)
             },
             update: function(time, delta) {
-
+              setRotationWithVelocity()
+              
               // Audio
               if (isPlaying === false) {
                 SoundFade.fadeIn(this, ambiance, 30000, ambianceVolume, 0, {loop:true});
@@ -170,6 +171,12 @@ const Game = ({mousePos}) => {
       platform2 = createPlatform(game, positionPlatform2.x, positionPlatform2.y, 'platform_2')
       platform3 = createPlatform(game, positionPlatform3.x, positionPlatform3.y, 'platform_3')
       platform4 = createPlatform(game, positionPlatform4.x, positionPlatform4.y, 'platform_4', true)
+    }
+
+    const setRotationWithVelocity = () => {
+      if (galette.body.velocity) {
+        galette.rotation += galette.body.velocity.x * 0.03
+      }
     }
 
     const createPlatform = (game, positionX, positionY, name, isLast) => {

@@ -3,6 +3,7 @@ const getGalette = (game) => {
     const galetteImage = game.add.image(100, 0, 'galette')
     let galette = game.matter.add.gameObject(galetteImage, body)
     galette.setScale(0.09)
+    galette.setFriction(0)
     galette.setDepth(1)
 
     return galette
