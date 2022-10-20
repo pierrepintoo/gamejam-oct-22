@@ -1,0 +1,14 @@
+.accueil {
+    font-family: 'blocus';
+    text-align: center;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6em;
+    align-items: center;
+    background-image: url(../../../public/assets/bg/background_accueil.jpg);
+    background-size: cover;
+    background-position: center;
+}

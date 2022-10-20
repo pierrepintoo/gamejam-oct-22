@@ -6,7 +6,7 @@ const setAmbianceAudioOnStart = (game, ambiance, ambianceForet, ambianceVolume) 
 
     if (isPlaying === false) {
         SoundFade.fadeIn(game, ambiance, 30000, ambianceVolume, 0, {loop:true});
-        ambiance.play('ambiance')
+        // ambiance.play('ambiance')
         console.log('ambianceForet', ambianceForet)
         SoundFade.fadeIn(game, ambianceForet, 30000, ambianceVolume, 0, {loop:true});
         game.sound.unlock();
