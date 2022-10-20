@@ -8,6 +8,7 @@ import { setBackground } from "./Background";
 import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
 import { setAmbianceAudioOnStart } from "./Audio";
+import { getAbeille } from "./Abeille";
 
 const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
@@ -16,6 +17,7 @@ const Game = ({mousePos}) => {
   let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4
   let isPlatform1Actived = false, isPlatform2Actived = false, isPlatform3Actived = false, isPlatform4Actived = false
   let keyA, keyS, keyD, keySPACE
+  let abeilles = []
   let activePlatform = ""
   let scaleXY = 0.09
   let scaleX = 0.09
@@ -96,6 +98,8 @@ const Game = ({mousePos}) => {
               keyS = inputs.keyS
               keyD = inputs.keyD
 
+              abeilles.push(getAbeille(this, 0.03))
+
 
               galette = getGalette(this, scaleXY)
 
@@ -124,8 +128,8 @@ const Game = ({mousePos}) => {
               // galetteImage.scaleX = 1
               // console.log(galette.scale)
               if (galette.body.velocity) {
-                galetteImage.scaleX = scaleX * (Math.abs(galette.body.velocity.x * 0.1) + 1 )
-                galetteImage.scaleY = scaleY * (Math.abs(galette.body.velocity.y * 0.1) + 1 )
+                galetteImage.scaleX = scaleX * (Math.abs(galette.body.velocity.x * 0.03) + 1 )
+                galetteImage.scaleY = scaleY * (Math.abs(galette.body.velocity.y * 0.03) + 1 )
               }   
               
               // Audio
@@ -150,7 +154,7 @@ const Game = ({mousePos}) => {
 
             },
             render: function() {
-              this.game.debug.geom(line)
+              // this.game.debug.geom(line)
             }
         },
     };
