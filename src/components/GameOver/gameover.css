@@ -36,7 +36,8 @@ a:hover {
     border-bottom: solid 2px #FFBB7B;
 }
 
-img {
+.platform {
+    width: 20%;
     animation: float 6s ease-in-out infinite;
 }
 
