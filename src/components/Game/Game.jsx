@@ -19,7 +19,11 @@ import './style.css'
 
 const Game = ({mousePos}) => {
 
-  const [isStarted, setIsStarted] = useState(true)
+  let countHit = 0
+  let previousCounthit = 0
+
+  const [isStarted, setIsStarted] = useState(false)
+  let [onHit, setOnHit] = useState(0)
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,6 +63,8 @@ const Game = ({mousePos}) => {
   const joystick = {x: 0, y: 0}
   let ambiance
   const ambianceVolume = 0.5
+
+  let cat1, cat2
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
 
@@ -108,7 +114,7 @@ const Game = ({mousePos}) => {
         physics: {
           default: 'matter',
           matter: {
-              debug: false,
+              debug: true,
               showStaticBody: true,
               gravity: {
                   y: 1
@@ -130,11 +136,14 @@ const Game = ({mousePos}) => {
             create: function() {
               // timeText = initTimer(this)
               // console.log(timeText)
-              console.log('add rectangle', this.add.rectangle)
               // const retangleBody = this.matter.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
               // retangleBody.allowGravity = false
               // const rectangle = this.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
               // let rectangle = this.matter.add.gameObject(retangleBody)
+              // retangleBody.setDepth(5)
+              // retangleBody.setOnCollide((e) => {
+              //   console.log('collide rectangle')
+              // })
               // retangleBody.setStatic(false) 
               // retangleBody.setDepth(5)
 
@@ -142,6 +151,8 @@ const Game = ({mousePos}) => {
               // const rectangleImage2 = this.add.rectangle(2300, 1000, 1000, 10000, '#fff')
               // let rectangle2 = this.matter.add.gameObject(rectangleImage2, retangleBody2)
               // rectangle2.setDepth(5)
+
+              initCategories(this)
 
 
               const inputs = getKeyDatas(this)
@@ -154,13 +165,16 @@ const Game = ({mousePos}) => {
 
               const abeilleCount = 3
               for (let i = 0; i <= abeilleCount; i++) {
-                positionAbeilleX = getRandomArbitrary(-100, 600)
-                positionAbeilleY = getRandomArbitrary(-200, 200)
+                positionAbeilleX = getRandomArbitrary(-300, 300)
+                positionAbeilleY = getRandomArbitrary(-1300, -700)
                 const newAbeille = getAbeille(this, 0.03, positionAbeilleX, positionAbeilleY)
+                newAbeille.setCollisionCategory(cat2)
                 abeilles.push(newAbeille)
+
               }
 
               galette = getGalette(this, scaleXY)
+              galette.setCollisionCategory(cat1)
 
               galetteCollideListener()
 
@@ -179,11 +193,17 @@ const Game = ({mousePos}) => {
               })
               ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               galetteImage = getGaletteImage()
+
+              let moreHit = collisonListener(this)
+              console.log(moreHit)
             },
             update: function(time, delta) {
+              if (countHit !== previousCounthit) {
+                setOnHit(countHit)
+                previousCounthit += 1
+              }
               score.time = time
               // console.log(score.time)
-
               const abeilleCount = 4
               for (let i = 0; i < abeilleCount; i++) {
                 let abeillePosition = {x: abeilles[i].x , y: abeilles[i].y}
@@ -194,8 +214,8 @@ const Game = ({mousePos}) => {
   
                 const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.1 * delta, 0.1 * delta))
   
-                abeilles[i].body.position.x += abeilleSpeed.x
-                abeilles[i].body.position.y += abeilleSpeed.y
+                abeilles[i].x += abeilleSpeed.x
+                abeilles[i].y += abeilleSpeed.y
                 // abeilles[i].setPosition(abeilles[i].x + abeilleSpeed.x)
                 // abeilles[i].setPosition(abeilles[i].y + abeilleSpeed.y)
               }
@@ -210,7 +230,7 @@ const Game = ({mousePos}) => {
               }
               
               // Audio
-              setAmbianceAudioOnStart(this, ambiance, ambianceVolume)
+              // setAmbianceAudioOnStart(this, ambiance, ambianceVolume)
 
               // TO DO : Set oiseaux sound
 
@@ -247,6 +267,39 @@ const Game = ({mousePos}) => {
             }
         },
     };
+
+    const collisonListener = (game) => {
+
+      game.matter.world.on('collisionstart',  (event) => {
+        if (event.pairs[0].bodyA.gameObject){
+        if (event.pairs[0].bodyB.gameObject.texture.key == "galette") {
+          if (event.pairs[0].bodyA.gameObject.texture.key == "abeille") {
+            // console.log('player is hit')
+            // console.log(countHit)
+            countHit += 1
+            return (countHit)
+            // setOnHit(onHit + 1)
+            // event.pairs[0].bodyA.gameObject.alpha =.5
+            // game.remove(event.pairs[0].bodyA)
+            //event.pairs[0].bodyA.gameObject.setPosition(0,0)
+            //this.add(event.pairs[0].bodyA)
+    
+    
+          // event.pairs[0].bodyA.gameObject.setCollisionCategory(cat0);
+                    //event.pairs[0].bodyA.gameObject.setCollisionCategory(cat0);
+    
+            //HERE MY PROBLEM i want that the player collide with nothing so the enemy normaly pass trough but can't go outside the screen and that 's the problem'
+            //event.pairs[0].bodyA.gameObject.setCollidesWith()
+          }
+       }		
+          }		
+      })
+    }
+
+    const initCategories = (game) => {
+      cat1 = game.matter.world.nextCategory();
+      cat2 = game.matter.world.nextCategory();
+    }
 
     const setPlatformOnScene = (game) =>  {
       platform1 = createPlatform(game, positionPlatform1.x, positionPlatform1.y, 'platform_1')
@@ -393,7 +446,8 @@ const Game = ({mousePos}) => {
 
     return (
         <div className="game">
-            {!isStarted && <Time 
+            {!isStarted && <Time
+              onHit={onHit}
             />}
             <CSSTransition
               in={isStarted}

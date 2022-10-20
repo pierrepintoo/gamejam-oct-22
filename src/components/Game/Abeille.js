@@ -11,7 +11,7 @@ const getAbeille = (game, scale, positionX, positionY) => {
     // abeille.setFriction(0)
     abeille.setDepth(1)
 
-    return abeilleImage
+    return abeille
 }
 
 export { getAbeille }

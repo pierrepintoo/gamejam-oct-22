@@ -9,3 +9,15 @@
     font-weight: 700;
     /* font-stretch: extra-expanded; */
 }
+
+.time__add {
+    color: #941212;
+    transform: translateY(-50px);
+    transition: 0.3s all ease-out;
+    opacity: 0;
+}
+
+.time__add--show {
+    opacity: 1;
+    transform: translateY(0);
+}
