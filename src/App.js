@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Game from './components/Game/Game';
+import GameOver from './components/Game/GameOver';
 import { useState } from 'react';
 
 function App() {
@@ -19,9 +20,10 @@ function App() {
       className="App"
       onMouseMove={(e) => handleMouseMove(e)}
       >
-      <Game 
+      {/* <Game 
         mousePos={mousePos}
-      />
+      /> */}
+      <GameOver/>
     </div>
   );
 }

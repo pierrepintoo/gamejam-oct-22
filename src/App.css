@@ -1,3 +1,8 @@
+@font-face {
+  font-family: blocus;
+  src: url('../public/assets/fonts/blocus.ttf');
+}
+
 :root {
   --blue: "#0000ff"
 }

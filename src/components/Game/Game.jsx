@@ -5,6 +5,7 @@ import { rotateGround, resetAngle, switchRotationPlatform } from "./Ground";
 import { loadImages, loadSounds } from "./Loader";
 import { getGalette, getGaletteImage } from "./Galette";
 import { setBackground } from "./Background";
+import { setGameOver } from "./GameOver";
 import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
 import { setAmbianceAudioOnStart } from "./Audio";
@@ -91,6 +92,7 @@ const Game = ({mousePos}) => {
               loadSounds(this)
             },
             create: function() {
+              setGameOver(this, windowW, windowH)
               const inputs = getKeyDatas(this)
               keyA = inputs.keyA
               keyS = inputs.keyS

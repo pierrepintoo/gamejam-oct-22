@@ -5,6 +5,7 @@ const loadImages = (game) => {
     const platform3 = game.load.image('platform_3', 'assets/platforms/plateforme_1.png')
     const platform4 = game.load.image('platform_4', 'assets/platforms/plateforme_1.png')
     const bg = game.load.image('bg', 'assets/bg/montagne.png')
+    const bgGo = game.load.image('bg', 'assets/bg/background_gameover.jpg')
 }
 
 const loadSounds = (game) => {
