@@ -14,6 +14,8 @@ import alea from 'alea';
 import { getRandomArbitrary  } from "../Utils";
 import Time from "../Time/Time";
 import Notice from "../Notice/Notice";
+import { CSSTransition } from "react-transition-group";
+import './style.css'
 
 const Game = ({mousePos}) => {
 
@@ -391,9 +393,16 @@ const Game = ({mousePos}) => {
 
     return (
         <div className="game">
-            <Time 
-            />
-            {isStarted && <Notice />}
+            {!isStarted && <Time 
+            />}
+            <CSSTransition
+              in={isStarted}
+              timeout={300}
+              classNames="notice__transition"
+              unmountOnExit
+            >
+              <Notice />
+            </CSSTransition>
         </div>
     )
 }
