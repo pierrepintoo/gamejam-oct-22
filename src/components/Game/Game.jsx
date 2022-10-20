@@ -50,7 +50,7 @@ const Game = ({mousePos}) => {
   let scaleXY = 0.15
   let scaleX = 0.15
   let scaleY = 0.15
-  const positionPlatform1 = {x: -100, y: -900}
+  const positionPlatform1 = {x: -100, y: -1000}
   const positionPlatform2 = {x: 800, y: -800}
   const positionPlatform3 = {x: 1400, y: -500}
   const positionPlatform4 = {x: 900, y: -100}
@@ -163,7 +163,6 @@ const Game = ({mousePos}) => {
               let positionAbeilleX
               let positionAbeilleY
 
-              const abeilleCount = 3
               // for (let i = 0; i <= abeilleCount; i++) {
               //   positionAbeilleX = getRandomArbitrary(-300, 300)
               //   positionAbeilleY = getRandomArbitrary(-1300, -700)
@@ -172,7 +171,10 @@ const Game = ({mousePos}) => {
               //   abeilles.push(newAbeille)
 
               // }
-              createAbeille(this)
+              createAbeille(this, {x: 900, y: -900})
+              createAbeille(this, {x: -100, y: -550})
+              createAbeille(this, {x: 100, y: 200})
+              createAbeille(this, {x: -100, y: 1200})
 
               galette = getGalette(this, scaleXY)
               galette.setCollisionCategory(cat1)
@@ -205,8 +207,8 @@ const Game = ({mousePos}) => {
               }
               score.time = time
               // console.log(score.time)
-              const abeilleCount = 1
-              for (let i = 0; i < 1; i++) {
+              const abeilleCount = 4
+              for (let i = 0; i < abeilleCount; i++) {
                 let abeillePosition = {x: abeilles[i].object.x , y: abeilles[i].object.y}
                 let galettePosition = {x: galette.x, y: galette.y}
                 let direction = new Phaser.Math.Vector2(galettePosition.x - abeillePosition.x, galettePosition.y - abeillePosition.y).normalize()
@@ -215,8 +217,8 @@ const Game = ({mousePos}) => {
                 
                 console.log(abeillePosition.x, abeilles[i].spawnPosition.x)
                 
-                if (distanceGaletteAbeilleSpawn < 700) {
-                  const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.1 * delta, 0.1 * delta))
+                if (distanceGaletteAbeilleSpawn < 500) {
+                  const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.2 * delta, 0.2 * delta))
     
                   abeilles[i].object.x += abeilleSpeed.x
                   abeilles[i].object.y += abeilleSpeed.y
@@ -287,8 +289,7 @@ const Game = ({mousePos}) => {
         },
     };
 
-    const createAbeille = (game) => {
-      const spawnPosition = {x: -300, y: -1000}
+    const createAbeille = (game, spawnPosition) => {
       const newAbeille = getAbeille(game, 0.03, spawnPosition.x, spawnPosition.y)
       console.log(newAbeille.scale)
       newAbeille.setCollisionCategory(cat2)
@@ -375,9 +376,9 @@ const Game = ({mousePos}) => {
     }
 
     const setCamerasParams = (game, objectToFollow) => {
-      game.cameras.main.startFollow(objectToFollow) 
+      // game.cameras.main.startFollow(objectToFollow) 
       // game.cameras.main.zoom = 1
-      // game.cameras.main.zoom = 0.2
+      game.cameras.main.zoom = 0.2
     }
 
     const jumpGalette = () => {
@@ -391,8 +392,6 @@ const Game = ({mousePos}) => {
     const galetteCollideListener = () => {
       galette.setOnCollide((e) => {
         // TO DO : Set Choc sound 
-
-        handleCollideWithAbeille(e)
 
         const platformName = e.bodyB.gameObject.texture.key
         if (platformName === "platform_1" && isPlatform1Actived === false) {
@@ -459,12 +458,12 @@ const Game = ({mousePos}) => {
       })
     }
 
-    const handleCollideWithAbeille = (e) => {
-      const objectCollided = e.bodyB.gameObject.texture.key
-      if (objectCollided === "abeille") {
-        console.log("abeille collided")
-      }
-    }
+    // const handleCollideWithAbeille = (e) => {
+    //   const objectCollided = e.bodyB.gameObject.texture.key
+    //   if (objectCollided === "abeille") {
+    //     console.log("abeille collided")
+    //   }
+    // }
 
     usePhaserGame(config)
 
