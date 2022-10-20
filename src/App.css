@@ -12,7 +12,7 @@
   color: white;
 }
 
-body {
+body, .App {
   margin: 0;
   /* background-image: url("bg/montagne.png");
   background-size: cover;
