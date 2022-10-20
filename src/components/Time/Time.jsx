@@ -5,14 +5,24 @@ import './style.css'
 
 const Time = ({onHit}) => {
     const [isPenalityVisible, setIsPenalityVisible] = useState(false)
-
+    const [isFirstTime, setIsFirstTime] = useState(true)
+    const [blockPenality, setBlockPenality] = useState(false)
     useEffect(() => {
-        addTime({seconds: 10})
-        setIsPenalityVisible(true)
+        if (isFirstTime) {
+            setIsFirstTime(false)
+        } else if (blockPenality === false) {
+            setBlockPenality(true)
+            addTime({seconds: 10})
+            setIsPenalityVisible(true)
+    
+            setTimeout(() => {
+                setIsPenalityVisible(false)
+            }, 3000)
 
-        setTimeout(() => {
-            setIsPenalityVisible(false)
-        }, 3000)
+            setTimeout(() => {
+                setBlockPenality(false)
+            }, 500)
+        }
   
     }, [onHit])
 

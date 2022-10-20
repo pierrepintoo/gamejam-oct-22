@@ -215,7 +215,7 @@ const Game = ({mousePos}) => {
                 
                 console.log(abeillePosition.x, abeilles[i].spawnPosition.x)
                 
-                if (distanceGaletteAbeilleSpawn < 200) {
+                if (distanceGaletteAbeilleSpawn < 700) {
                   const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.1 * delta, 0.1 * delta))
     
                   abeilles[i].object.x += abeilleSpeed.x
@@ -290,6 +290,7 @@ const Game = ({mousePos}) => {
     const createAbeille = (game) => {
       const spawnPosition = {x: -300, y: -1000}
       const newAbeille = getAbeille(game, 0.03, spawnPosition.x, spawnPosition.y)
+      console.log(newAbeille.scale)
       newAbeille.setCollisionCategory(cat2)
       abeilles.push({
         spawnPosition: spawnPosition, 
