@@ -9,6 +9,9 @@ import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
 import { setAmbianceAudioOnStart } from "./Audio";
 import { getAbeille } from "./Abeille";
+import { createNoise2D } from 'simplex-noise';
+import alea from 'alea';
+import { getRandomArbitrary  } from "../Utils";
 
 const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
@@ -45,6 +48,11 @@ const Game = ({mousePos}) => {
   }
 
   let jumpingCount = 0
+
+  // create a new random function based on the seed
+  const prng = alea('seed');
+  // use the seeded random function to initialize the noise function
+  const noise2D = createNoise2D(prng);
 
   const usePhaserGame = (config) => {
       React.useEffect(() => {
@@ -98,8 +106,10 @@ const Game = ({mousePos}) => {
               keyS = inputs.keyS
               keyD = inputs.keyD
 
-              abeilles.push(getAbeille(this, 0.03))
-
+              const positionAbeilleX = getRandomArbitrary(-100, 200)
+              const positionAbeilleY = getRandomArbitrary(160, 200)
+              console.log(positionAbeilleX)
+              abeilles.push(getAbeille(this, 0.03, positionAbeilleX, positionAbeilleY))
 
               galette = getGalette(this, scaleXY)
 
@@ -119,18 +129,31 @@ const Game = ({mousePos}) => {
               })
               ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               galetteImage = getGaletteImage()
+
+              console.log(new Phaser.Math.Vector2)
+
+              // console.log(new Phaser.Math.Vector2(abeillePosition.x - galettePosition.x, abeillePosition.y - galettePosition.y).normalize())
+              console.log(abeilles[0].setPosition)
             },
             update: function(time, delta) {
+              let abeillePosition = abeilles[0].body.position
+              let galettePosition = galette.body.position
+              let direction = new Phaser.Math.Vector2(galettePosition.x - abeillePosition.x, galettePosition.y - abeillePosition.y).normalize()
+
+              abeilles[0].flipX = direction.x > 0
+
+              const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.1 * delta, 0.1 * delta))
+              // abeilles[0].setPosition(newPositionAbeille.x, newPositionAbeille.y)
+              abeilles[0].body.position.x += abeilleSpeed.x
+              abeilles[0].body.position.y += abeilleSpeed.y
+              // console.log(abeilles[0].body.position)
               // Galette that rotate with velocity (because friction = 0)
               setRotationWithVelocity()
-              // console.log(galetteImage.scaleX)
-              // galetteImage.scaleX = Math.abs(galette.body.velocity.x) * 10
-              // galetteImage.scaleX = 1
-              // console.log(galette.scale)
+
               if (galette.body.velocity) {
                 galetteImage.scaleX = scaleX * (Math.abs(galette.body.velocity.x * 0.03) + 1 )
                 galetteImage.scaleY = scaleY * (Math.abs(galette.body.velocity.y * 0.03) + 1 )
-              }   
+              }
               
               // Audio
               setAmbianceAudioOnStart(this, ambiance, ambianceVolume)
@@ -151,7 +174,6 @@ const Game = ({mousePos}) => {
                 positionPlatform4,
                 joystick
               )
-
             },
             render: function() {
               // this.game.debug.geom(line)
@@ -168,7 +190,10 @@ const Game = ({mousePos}) => {
 
     const setRotationWithVelocity = () => {
       if (galette.body.velocity) {
-        galette.rotation += galette.body.velocity.x * 0.03
+        console.log('x velocity galette', galette.body.velocity.x)
+        const rotation = Math.min(new Phaser.Math.Vector2(galette.body.velocity).length() * Math.sign(galette.body.velocity.x) * 0.05, 0.3)
+        console.log(new Phaser.Math.Vector2(galette.body.velocity).length() * Math.sign(galette.body.velocity.x) * 0.05)
+        galette.rotation += rotation
       }
     }
 
