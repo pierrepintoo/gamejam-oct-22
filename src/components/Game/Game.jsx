@@ -47,6 +47,8 @@ const Game = ({mousePos}) => {
   const positionPlatform10 = {x: 250, y: 2200}
   const joystick = {x: 0, y: 0}
   let ambiance
+  let ambianceForet
+  let sautGalette
   const ambianceVolume = 0.5
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
@@ -167,6 +169,7 @@ const Game = ({mousePos}) => {
                 }
               })
               ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
+              ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
               galetteImage = getGaletteImage()
             },
             update: function(time, delta) {
@@ -197,9 +200,9 @@ const Game = ({mousePos}) => {
                 galetteImage.scaleX = scaleX * (Math.abs(galette.body.velocity.x * 0.03) + 1 )
                 galetteImage.scaleY = scaleY * (Math.abs(galette.body.velocity.y * 0.03) + 1 )
               }
-              
+            
               // Audio
-              setAmbianceAudioOnStart(this, ambiance, ambianceVolume)
+              setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
 
               // Set active platforms that can rotate
               switchRotationPlatform(
