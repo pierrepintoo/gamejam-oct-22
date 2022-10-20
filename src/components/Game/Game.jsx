@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Phaser from "phaser";
 import getKeyDatas from "./getKeyDatas";
 import { rotateGround, resetAngle, switchRotationPlatform } from "./Ground";
@@ -13,8 +13,17 @@ import { createNoise2D } from 'simplex-noise';
 import alea from 'alea';
 import { getRandomArbitrary  } from "../Utils";
 import Time from "../Time/Time";
+import Notice from "../Notice/Notice";
 
 const Game = ({mousePos}) => {
+
+  const [isStarted, setIsStarted] = useState(true)
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsStarted(false)
+    }, 5000)
+  }, [])
 
   const score = {
     time: 0,
@@ -204,6 +213,8 @@ const Game = ({mousePos}) => {
               // Audio
               setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
 
+              // TO DO : Set oiseaux sound
+
               // Set active platforms that can rotate
               switchRotationPlatform(
                 this,
@@ -291,11 +302,14 @@ const Game = ({mousePos}) => {
       if (jumpingCount < 2) {
         jumpingCount += 1
         galette.setVelocityY(-10.5)
+        // TO DO: Play saut sound
       }
     }
 
     const galetteCollideListener = () => {
       galette.setOnCollide((e) => {
+        // TO DO : Set Choc sound 
+
         handleCollideWithAbeille(e)
 
         const platformName = e.bodyB.gameObject.texture.key
@@ -381,8 +395,8 @@ const Game = ({mousePos}) => {
     return (
         <div className="game">
             <Time 
-
             />
+            {isStarted && <Notice />}
         </div>
     )
 }
