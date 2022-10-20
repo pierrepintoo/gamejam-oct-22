@@ -1,7 +1,7 @@
 let galetteImage
 
 const getGalette = (game, scale) => {
-    const body = game.matter.add.circle(0, -1000, 200)
+    const body = game.matter.add.circle(0, -1000, 300)
     galetteImage = game.add.image(100, 0, 'galette')
     let galette = game.matter.add.gameObject(galetteImage, body)
     galette.setScale(scale)

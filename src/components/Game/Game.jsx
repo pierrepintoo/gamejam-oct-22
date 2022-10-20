@@ -32,9 +32,9 @@ const Game = ({mousePos}) => {
   let abeilles = []
   let activePlatform = ""
   let timeText
-  let scaleXY = 0.09
-  let scaleX = 0.09
-  let scaleY = 0.09
+  let scaleXY = 0.15
+  let scaleX = 0.15
+  let scaleY = 0.15
   const positionPlatform1 = {x: -100, y: -900}
   const positionPlatform2 = {x: 800, y: -800}
   const positionPlatform3 = {x: 1400, y: -500}
@@ -97,7 +97,7 @@ const Game = ({mousePos}) => {
         physics: {
           default: 'matter',
           matter: {
-              debug: true,
+              debug: false,
               showStaticBody: true,
               gravity: {
                   y: 1
@@ -120,15 +120,17 @@ const Game = ({mousePos}) => {
               // timeText = initTimer(this)
               // console.log(timeText)
               console.log('add rectangle', this.add.rectangle)
-              const retangleBody = this.matter.add.rectangle(0, 1000, 10000)
-              const rectangleImage = this.add.rectangle(-1100, -1000, 1000, 10000, '#fff')
-              let rectangle = this.matter.add.gameObject(rectangleImage, retangleBody)
-              rectangle.setDepth(5)
+              // const retangleBody = this.matter.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
+              // retangleBody.allowGravity = false
+              // const rectangle = this.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
+              // let rectangle = this.matter.add.gameObject(retangleBody)
+              // retangleBody.setStatic(false) 
+              // retangleBody.setDepth(5)
 
-              const retangleBody2 = this.matter.add.rectangle(0, 1000, 10000)
-              const rectangleImage2 = this.add.rectangle(2300, 1000, 1000, 10000, '#fff')
-              let rectangle2 = this.matter.add.gameObject(rectangleImage2, retangleBody2)
-              rectangle2.setDepth(5)
+              // const retangleBody2 = this.matter.add.rectangle(0, 1000, 10000)
+              // const rectangleImage2 = this.add.rectangle(2300, 1000, 1000, 10000, '#fff')
+              // let rectangle2 = this.matter.add.gameObject(rectangleImage2, retangleBody2)
+              // rectangle2.setDepth(5)
 
 
               const inputs = getKeyDatas(this)
@@ -247,6 +249,13 @@ const Game = ({mousePos}) => {
 
     }
 
+    const createWallsOfGameOver = (positionX, positionY, width, height) => {
+      const retangleBody2 = this.matter.add.rectangle(0, 1000, 10000)
+      const rectangleImage2 = this.add.rectangle(2300, 1000, 1000, 10000, '#fff')
+      let rectangle2 = this.matter.add.gameObject(rectangleImage2, retangleBody2)
+      rectangle2.setDepth(5)
+    }
+
     const setRotationWithVelocity = () => {
       if (galette.body.velocity) {
         const rotation = Math.min(new Phaser.Math.Vector2(galette.body.velocity).length() * Math.sign(galette.body.velocity.x) * 0.05, 0.3)
@@ -270,15 +279,15 @@ const Game = ({mousePos}) => {
     }
 
     const setCamerasParams = (game, objectToFollow) => {
-      // game.cameras.main.startFollow(objectToFollow) 
-      // game.cameras.main.zoom = 2
-      game.cameras.main.zoom = 0.2
+      game.cameras.main.startFollow(objectToFollow) 
+      game.cameras.main.zoom = 1
+      // game.cameras.main.zoom = 0.2
     }
 
     const jumpGalette = () => {
       if (jumpingCount < 2) {
         jumpingCount += 1
-        galette.setVelocityY(-7.5)
+        galette.setVelocityY(-10.5)
       }
     }
 
