@@ -7,7 +7,7 @@ import { getGalette, getGaletteImage } from "./Galette";
 import { setBackground } from "./Background";
 import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
-import { setAmbianceAudioOnStart } from "./Audio";
+import { playSound, setAmbianceAudioOnStart } from "./Audio";
 import { getAbeille } from "./Abeille";
 import { createNoise2D } from 'simplex-noise';
 import alea from 'alea';
@@ -17,7 +17,7 @@ import Notice from "../Notice/Notice";
 
 const Game = ({mousePos}) => {
 
-  const [isStarted, setIsStarted] = useState(true)
+  const [isStarted, setIsStarted] = useState(false)
 
   useEffect(() => {
     setTimeout(() => {
@@ -57,7 +57,7 @@ const Game = ({mousePos}) => {
   const joystick = {x: 0, y: 0}
   let ambiance
   let ambianceForet
-  let sautGalette
+  let sautSound
   const ambianceVolume = 0.5
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
@@ -174,11 +174,10 @@ const Game = ({mousePos}) => {
               Axis.addEventListener("joystick:move", joystickMoveHandler);
               Axis.addEventListener("keydown", (e) => {
                 if (e.key === "a") {
-                  jumpGalette()
+                  jumpGalette(this)
                 }
               })
-              ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
-              ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
+
               galetteImage = getGaletteImage()
             },
             update: function(time, delta) {
@@ -211,9 +210,12 @@ const Game = ({mousePos}) => {
               }
             
               // Audio
-              setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
+              sautSound = this.sound.add('sautGalette', { volume: ambianceVolume});
+              ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
+              ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
+              ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
 
-              // TO DO : Set oiseaux sound
+              setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
 
               // Set active platforms that can rotate
               switchRotationPlatform(
@@ -298,13 +300,25 @@ const Game = ({mousePos}) => {
       // game.cameras.main.zoom = 0.2
     }
 
-    const jumpGalette = () => {
+    console.log(sautSound)
+    const jumpGalette = (game) => {
+      let elapsedTime = 0
       if (jumpingCount < 2) {
         jumpingCount += 1
         galette.setVelocityY(-10.5)
-        // TO DO: Play saut sound
+        elapsedTime += 1000
+				if (elapsedTime % 15000 === 0) {
+          playSound(game, sautSound, ambianceVolume)
+          // sautSound.play('sautGalette', ambianceVolume);
+				}
       }
     }
+
+    // this.elapsedTime += 1000
+		// 		if (this.elapsedTime % 15000 === 0) {
+		// 			sautSound = this.sound.add('sautGalette', { volume: ambianceVolume});
+    //       sautSound.play('sautGalette', ambianceVolume);
+		// 		}
 
     const galetteCollideListener = () => {
       galette.setOnCollide((e) => {
