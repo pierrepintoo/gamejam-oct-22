@@ -36,6 +36,16 @@ export const resetAngle = () => {
 
 
 let isPlatform1Resetted = false, isPlatform2Resetted = false, isPlatform3Resetted = false, isPlatform4Resetted = false
+let isPlatform5Resetted = false, isPlatform6Resetted = false, isPlatform7Resetted = false, isPlatform8Resetted = false
+let isPlatform9Resetted = false, isPlatform10Resetted = false
+
+const activationOfPlatform = (game, platform, keyA, keyS, positionPlatform, joystick, isPlatformResetted) => {
+    if (isPlatformResetted === false) {
+        resetAngle()
+        isPlatformResetted = true
+    }
+    rotateGround(game, platform, keyA, keyS, positionPlatform.x, positionPlatform.y, joystick)
+}
 
 export const switchRotationPlatform = (
     game,
@@ -44,12 +54,24 @@ export const switchRotationPlatform = (
     platform2,
     platform3,
     platform4,
+    platform5,
+    platform6,
+    platform7,
+    platform8,
+    platform9,
+    platform10,
     keyA,
     keyS,
     positionPlatform1,
     positionPlatform2,
     positionPlatform3,
     positionPlatform4,
+    positionPlatform5,
+    positionPlatform6,
+    positionPlatform7,
+    positionPlatform8,
+    positionPlatform9,
+    positionPlatform10,
     joystick
 ) => {
     switch(activePlatform) {
@@ -81,8 +103,49 @@ export const switchRotationPlatform = (
           }
           rotateGround(game, platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y, joystick)
         break
+        case 'platform_5':
+            if (isPlatform5Resetted === false) {
+                resetAngle()
+                isPlatform5Resetted = true
+            }
+          rotateGround(game, platform5, keyA, keyS, positionPlatform5.x, positionPlatform5.y, joystick)
+        break
+        case 'platform_6':
+            if (isPlatform6Resetted === false) {
+                resetAngle()
+                isPlatform6Resetted = true
+            }
+          rotateGround(game, platform6, keyA, keyS, positionPlatform6.x, positionPlatform6.y, joystick)
+        break
+        case 'platform_7':
+            if (isPlatform7Resetted === false) {
+                resetAngle()
+                isPlatform7Resetted = true
+            }
+          rotateGround(game, platform7, keyA, keyS, positionPlatform7.x, positionPlatform7.y, joystick)
+        break
+        case 'platform_8':
+            if (isPlatform8Resetted === false) {
+                resetAngle()
+                isPlatform8Resetted = true
+            }
+          rotateGround(game, platform8, keyA, keyS, positionPlatform8.x, positionPlatform8.y, joystick)
+        break
+        case 'platform_9':
+            if (isPlatform9Resetted === false) {
+                resetAngle()
+                isPlatform9Resetted = true
+            }
+          rotateGround(game, platform9, keyA, keyS, positionPlatform9.x, positionPlatform9.y, joystick)
+        break
+        case 'platform_10':
+            if (isPlatform10Resetted === false) {
+                resetAngle()
+                isPlatform10Resetted = true
+            }
+          rotateGround(game, platform10, keyA, keyS, positionPlatform10.x, positionPlatform10.y, joystick)
+        break
         default:
           break
       }
 }
-
