@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Game from './components/Game/Game';
 import GameOver from './components/GameOver/GameOver';
-import Notice from './components/Notice/Notice';
+import Notice from './components/Notice/Notice.jsx';
 import { useState } from 'react';
 
 function App() {
