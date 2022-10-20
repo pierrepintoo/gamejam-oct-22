@@ -1,0 +1,8 @@
+.time {
+    position: absolute;
+    top: 80px;
+    left: 80px;
+    background-color: transparent;
+    font-size: 24px;
+    /* font-stretch: extra-expanded; */
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Phaser from "phaser";
 import getKeyDatas from "./getKeyDatas";
 import { rotateGround, resetAngle, switchRotationPlatform } from "./Ground";
@@ -12,8 +12,12 @@ import { getAbeille } from "./Abeille";
 import { createNoise2D } from 'simplex-noise';
 import alea from 'alea';
 import { getRandomArbitrary  } from "../Utils";
+import Time from "../Time/Time";
 
 const Game = ({mousePos}) => {
+
+  const [chrono, setChrono] = useState(0)
+
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
@@ -24,6 +28,7 @@ const Game = ({mousePos}) => {
   let keyA, keyS, keyD, keySPACE
   let abeilles = []
   let activePlatform = ""
+  let timeText
   let scaleXY = 0.09
   let scaleX = 0.09
   let scaleY = 0.09
@@ -109,6 +114,10 @@ const Game = ({mousePos}) => {
               loadSounds(this)
             },
             create: function() {
+              // timeText = initTimer(this)
+              // console.log(timeText)
+
+
               const inputs = getKeyDatas(this)
               keyA = inputs.keyA
               keyS = inputs.keyS
@@ -144,7 +153,6 @@ const Game = ({mousePos}) => {
               })
               ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               galetteImage = getGaletteImage()
-              console.log(abeilles[0].setPosition)
             },
             update: function(time, delta) {
               const abeilleCount = 4
@@ -232,7 +240,6 @@ const Game = ({mousePos}) => {
 
     const createPlatform = (game, positionX, positionY, name, isLast) => {
       let platformToReturn
-      console.log(positionX, positionY, name)
       platformToReturn = game.matter.add.image(positionX, positionY, name, null, { isStatic: true })
       if (isLast) {
         // Last platform scale
@@ -240,7 +247,6 @@ const Game = ({mousePos}) => {
 
       } else {
         // All platforms scale
-        console.log(name, platformToReturn)
         platformToReturn.setScale(0.4)
       }
 
@@ -282,27 +288,27 @@ const Game = ({mousePos}) => {
           activePlatform = 'platform_4'
           jumpingCount = 0
         } else if (platformName === "platform_5" && isPlatform5Actived === false) {
-          isPlatform4Actived = true
+          isPlatform5Actived = true
           activePlatform = 'platform_5'
           jumpingCount = 0
         } else if (platformName === "platform_6" && isPlatform6Actived === false) {
-          isPlatform4Actived = true
+          isPlatform6Actived = true
           activePlatform = 'platform_6'
           jumpingCount = 0
         } else if (platformName === "platform_7" && isPlatform7Actived === false) {
-          isPlatform4Actived = true
+          isPlatform7Actived = true
           activePlatform = 'platform_7'
           jumpingCount = 0
         } else if (platformName === "platform_8" && isPlatform8Actived === false) {
-          isPlatform4Actived = true
+          isPlatform8Actived = true
           activePlatform = 'platform_8'
           jumpingCount = 0
         } else if (platformName === "platform_9" && isPlatform9Actived === false) {
-          isPlatform4Actived = true
+          isPlatform9Actived = true
           activePlatform = 'platform_9'
           jumpingCount = 0
         } else if (platformName === "platform_10" && isPlatform10Actived === false) {
-          isPlatform4Actived = true
+          isPlatform10Actived = true
           activePlatform = 'platform_10'
           jumpingCount = 0
         } else if (platformName === "platform_1") {
@@ -331,7 +337,6 @@ const Game = ({mousePos}) => {
 
     const handleCollideWithAbeille = (e) => {
       const objectCollided = e.bodyB.gameObject.texture.key
-      console.log(e.bodyA.gameObject.texture.key, e.bodyB.gameObject.texture.key)
       if (objectCollided === "abeille") {
         console.log("abeille collided")
       }
@@ -346,8 +351,8 @@ const Game = ({mousePos}) => {
   updateForArcadeBorne();
 
     return (
-        <div>
-            
+        <div className="game">
+            <Time />
         </div>
     )
 }
