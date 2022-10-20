@@ -24,8 +24,8 @@ function App() {
       {/* <Game 
         mousePos={mousePos}
       /> */}
-      {/* <GameOver/> */}
-      <Notice/>
+      <GameOver/>
+      {/* <Notice/> */}
     </div>
   );
 }

@@ -6,7 +6,12 @@ const Notice = () => {
             <h1>Notice du jeu</h1>
             <div className="content-notice">
                 <div>
-                    <img src="" alt="" />
+                    <img src="assets\notice\joystick.png" alt="" />
+                    <p>Rotation des plateformes</p>
+                </div>
+                <div>
+                    <img src="assets\notice\touche_a.png" alt="" />
+                    <p>Saut ou double saut</p>
                 </div>
             </div>
         </div>

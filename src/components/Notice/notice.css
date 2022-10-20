@@ -6,7 +6,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 1.5em;
+    gap: 6em;
     align-items: center;
     background-image: url(../../../public/assets/bg/background_noticedujeu.jpg);
     background-size: cover;
@@ -19,4 +19,20 @@ h1 {
     font-weight: 100;
     color: #072A44;
     line-height: .6em;
+}
+
+.content-notice {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.content-notice div img {
+    width: 75%;
+}
+
+p {
+    width: 80%;
+    margin: 0 auto;
+    font-size: 2.5em;
 }
