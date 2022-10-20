@@ -58,6 +58,7 @@ const Game = ({mousePos}) => {
   let ambiance
   let ambianceForet
   let sautSound
+  let choc
   const ambianceVolume = 0.5
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
@@ -130,7 +131,7 @@ const Game = ({mousePos}) => {
             create: function() {
               // timeText = initTimer(this)
               // console.log(timeText)
-              console.log('add rectangle', this.add.rectangle)
+              // console.log('add rectangle', this.add.rectangle)
               // const retangleBody = this.matter.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
               // retangleBody.allowGravity = false
               // const rectangle = this.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
@@ -210,8 +211,9 @@ const Game = ({mousePos}) => {
               }
             
               // Audio
+              choc = this.sound.add('choc', { volume: ambianceVolume});
+              console.log(choc)
               sautSound = this.sound.add('sautGalette', { volume: ambianceVolume});
-              ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
 
@@ -300,32 +302,20 @@ const Game = ({mousePos}) => {
       // game.cameras.main.zoom = 0.2
     }
 
-    console.log(sautSound)
     const jumpGalette = (game) => {
-      let elapsedTime = 0
       if (jumpingCount < 2) {
         jumpingCount += 1
         galette.setVelocityY(-10.5)
-        elapsedTime += 1000
-				if (elapsedTime % 15000 === 0) {
-          playSound(game, sautSound, ambianceVolume)
-          // sautSound.play('sautGalette', ambianceVolume);
-				}
+        playSound(game, sautSound, ambianceVolume)
       }
     }
 
-    // this.elapsedTime += 1000
-		// 		if (this.elapsedTime % 15000 === 0) {
-		// 			sautSound = this.sound.add('sautGalette', { volume: ambianceVolume});
-    //       sautSound.play('sautGalette', ambianceVolume);
-		// 		}
-
-    const galetteCollideListener = () => {
+    const galetteCollideListener = (game) => {
       galette.setOnCollide((e) => {
-        // TO DO : Set Choc sound 
-
+        // playSound(game, choc, ambianceVolume)
+        
         handleCollideWithAbeille(e)
-
+        
         const platformName = e.bodyB.gameObject.texture.key
         if (platformName === "platform_1" && isPlatform1Actived === false) {
           isPlatform1Actived = true
