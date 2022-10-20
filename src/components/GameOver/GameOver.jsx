@@ -1,4 +1,4 @@
-import '../../public/assets/css/gameover.css'
+import './gameover.css'
 
 const GameOver = () => {
     return (
