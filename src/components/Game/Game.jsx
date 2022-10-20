@@ -16,7 +16,10 @@ import Time from "../Time/Time";
 
 const Game = ({mousePos}) => {
 
-  const [chrono, setChrono] = useState(0)
+  const score = {
+    time: 0,
+    timeWithString: ""
+  }
 
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
@@ -116,6 +119,7 @@ const Game = ({mousePos}) => {
             create: function() {
               // timeText = initTimer(this)
               // console.log(timeText)
+              console.log('add rectangle', this.add.rectangle)
 
 
               const inputs = getKeyDatas(this)
@@ -155,6 +159,9 @@ const Game = ({mousePos}) => {
               galetteImage = getGaletteImage()
             },
             update: function(time, delta) {
+              score.time = time
+              // console.log(score.time)
+
               const abeilleCount = 4
               for (let i = 0; i < abeilleCount; i++) {
                 let abeillePosition = {x: abeilles[i].x , y: abeilles[i].y}
@@ -352,7 +359,9 @@ const Game = ({mousePos}) => {
 
     return (
         <div className="game">
-            <Time />
+            <Time 
+
+            />
         </div>
     )
 }
