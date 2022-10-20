@@ -120,6 +120,15 @@ const Game = ({mousePos}) => {
               // timeText = initTimer(this)
               // console.log(timeText)
               console.log('add rectangle', this.add.rectangle)
+              const retangleBody = this.matter.add.rectangle(0, 1000, 10000)
+              const rectangleImage = this.add.rectangle(-1100, -1000, 1000, 10000, '#fff')
+              let rectangle = this.matter.add.gameObject(rectangleImage, retangleBody)
+              rectangle.setDepth(5)
+
+              const retangleBody2 = this.matter.add.rectangle(0, 1000, 10000)
+              const rectangleImage2 = this.add.rectangle(2300, 1000, 1000, 10000, '#fff')
+              let rectangle2 = this.matter.add.gameObject(rectangleImage2, retangleBody2)
+              rectangle2.setDepth(5)
 
 
               const inputs = getKeyDatas(this)
