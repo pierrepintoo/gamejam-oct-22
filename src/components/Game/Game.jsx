@@ -164,14 +164,15 @@ const Game = ({mousePos}) => {
               let positionAbeilleY
 
               const abeilleCount = 3
-              for (let i = 0; i <= abeilleCount; i++) {
-                positionAbeilleX = getRandomArbitrary(-300, 300)
-                positionAbeilleY = getRandomArbitrary(-1300, -700)
-                const newAbeille = getAbeille(this, 0.03, positionAbeilleX, positionAbeilleY)
-                newAbeille.setCollisionCategory(cat2)
-                abeilles.push(newAbeille)
+              // for (let i = 0; i <= abeilleCount; i++) {
+              //   positionAbeilleX = getRandomArbitrary(-300, 300)
+              //   positionAbeilleY = getRandomArbitrary(-1300, -700)
+              //   const newAbeille = getAbeille(this, 0.03, positionAbeilleX, positionAbeilleY)
+              //   newAbeille.setCollisionCategory(cat2)
+              //   abeilles.push(newAbeille)
 
-              }
+              // }
+              createAbeille(this)
 
               galette = getGalette(this, scaleXY)
               galette.setCollisionCategory(cat1)
@@ -204,18 +205,36 @@ const Game = ({mousePos}) => {
               }
               score.time = time
               // console.log(score.time)
-              const abeilleCount = 4
-              for (let i = 0; i < abeilleCount; i++) {
-                let abeillePosition = {x: abeilles[i].x , y: abeilles[i].y}
+              const abeilleCount = 1
+              for (let i = 0; i < 1; i++) {
+                let abeillePosition = {x: abeilles[i].object.x , y: abeilles[i].object.y}
                 let galettePosition = {x: galette.x, y: galette.y}
                 let direction = new Phaser.Math.Vector2(galettePosition.x - abeillePosition.x, galettePosition.y - abeillePosition.y).normalize()
-  
-                abeilles[i].flipX = direction.x > 0
-  
-                const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.1 * delta, 0.1 * delta))
-  
-                abeilles[i].x += abeilleSpeed.x
-                abeilles[i].y += abeilleSpeed.y
+                let directionToSpawn = new Phaser.Math.Vector2(abeilles[i].spawnPosition.x - abeillePosition.x, abeilles[i].spawnPosition.y - abeillePosition.y).normalize()
+                const distanceGaletteAbeilleSpawn = new Phaser.Math.Vector2(galettePosition.x - abeilles[i].spawnPosition.x, galettePosition.y - abeilles[i].spawnPosition.y).length()
+                
+                console.log(abeillePosition.x, abeilles[i].spawnPosition.x)
+                
+                if (distanceGaletteAbeilleSpawn < 200) {
+                  const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.1 * delta, 0.1 * delta))
+    
+                  abeilles[i].object.x += abeilleSpeed.x
+                  abeilles[i].object.y += abeilleSpeed.y
+
+                  abeilles[i].object.flipX = direction.x > 0
+
+                } else if (parseInt(abeillePosition.x) !== abeilles[i].spawnPosition.x) {
+                  const abeilleSpeed = directionToSpawn.multiply(new Phaser.Math.Vector2(0.1 * delta, 0.1 * delta))
+    
+                  abeilles[i].object.x += abeilleSpeed.x
+                  abeilles[i].object.y += abeilleSpeed.y
+                  
+                  abeilles[i].object.flipX = directionToSpawn.x > 0
+                } else {
+                  abeilles[i].object.y = abeilles[i].spawnPosition.y + Math.sin(time * 0.005) * 10
+                }
+                
+
                 // abeilles[i].setPosition(abeilles[i].x + abeilleSpeed.x)
                 // abeilles[i].setPosition(abeilles[i].y + abeilleSpeed.y)
               }
@@ -267,6 +286,16 @@ const Game = ({mousePos}) => {
             }
         },
     };
+
+    const createAbeille = (game) => {
+      const spawnPosition = {x: -300, y: -1000}
+      const newAbeille = getAbeille(game, 0.03, spawnPosition.x, spawnPosition.y)
+      newAbeille.setCollisionCategory(cat2)
+      abeilles.push({
+        spawnPosition: spawnPosition, 
+        object: newAbeille
+      })
+    }
 
     const collisonListener = (game) => {
 
@@ -346,7 +375,7 @@ const Game = ({mousePos}) => {
 
     const setCamerasParams = (game, objectToFollow) => {
       game.cameras.main.startFollow(objectToFollow) 
-      game.cameras.main.zoom = 1
+      // game.cameras.main.zoom = 1
       // game.cameras.main.zoom = 0.2
     }
 
