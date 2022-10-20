@@ -12,6 +12,7 @@ const loadImages = (game) => {
     const platform10 = game.load.image('platform_10', 'assets/platforms/plateforme_1.png')
     const abeille = game.load.image('abeille', 'assets/ennemis/abeille_fachee.png')
     const bg = game.load.image('bg', 'assets/bg/montagne.png')
+    const bgGo = game.load.image('bg', 'assets/bg/background_gameover.jpg')
 }
 
 const loadSounds = (game) => {
