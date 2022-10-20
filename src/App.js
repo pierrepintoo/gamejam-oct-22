@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import Game from './components/Game/Game';
-import GameOver from './components/GameOver/GameOver.jsx';
+import GameOver from './components/GameOver/GameOver';
+import Notice from './components/Notice/Notice';
 import { useState } from 'react';
 
 function App() {
@@ -22,8 +23,9 @@ function App() {
       >
       <Game 
         mousePos={mousePos}
-      />
+      /> 
       {/* <GameOver/> */}
+      {/* <Notice/> */}
     </div>
   );
 }

@@ -7,6 +7,11 @@
   --blue: "#0000ff"
 }
 
+::selection {
+  background-color: #072A44;
+  color: white;
+}
+
 body {
   margin: 0;
   /* background-image: url("bg/montagne.png");
