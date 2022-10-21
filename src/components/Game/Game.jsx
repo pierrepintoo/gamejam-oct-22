@@ -514,7 +514,7 @@ const Game = ({mousePos, handleGameOver, handleEndGame}) => {
     const jumpGalette = async (game) => {
       if (jumpingCount < 2 && canMoveCamera) {
         jumpingCount += 1
-        galette.setVelocityY(-10.5)
+        galette.setVelocityY(-12.5)
         sautSound.play()
         // console.log(game.cameras.main.zoomEffect.isRunning)
         if (game.cameras.main.zoomEffect.isRunning === false && canMoveCamera) {
