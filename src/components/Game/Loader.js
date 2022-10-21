@@ -17,6 +17,10 @@ const loadImages = (game) => {
 
 const loadSounds = (game) => {
     const ambiance = game.load.audio('ambiance', ['assets/audio/ambiance/ambiance.mp3']);
+    const choc = game.load.audio('choc', ['assets/audio/choc.mp3']);
+    const ambianceForet = game.load.audio('ambianceForet', ['assets/audio/ambiance/ambiance_foret.mp3']);
+    const sautGalette = game.load.audio('sautGalette', ['assets/audio/saut.mp3']);
+    const chute = game.load.audio('chute', ['assets/audio/chute.mp3']);
 
 }
 

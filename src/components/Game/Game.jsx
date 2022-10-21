@@ -7,7 +7,7 @@ import { getGalette, getGaletteImage } from "./Galette";
 import { setBackground } from "./Background";
 import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
-import { setAmbianceAudioOnStart } from "./Audio";
+import { playSound, setAmbianceAudioOnStart } from "./Audio";
 import { getAbeille } from "./Abeille";
 import { createNoise2D } from 'simplex-noise';
 import alea from 'alea';
@@ -62,6 +62,9 @@ const Game = ({mousePos}) => {
   const positionPlatform10 = {x: -550, y: 2200}
   const joystick = {x: 0, y: 0}
   let ambiance
+  let ambianceForet
+  let sautSound
+  let choc
   const ambianceVolume = 0.5
 
   let cat1, cat2
@@ -137,6 +140,7 @@ const Game = ({mousePos}) => {
             create: function() {
               // timeText = initTimer(this)
               // console.log(timeText)
+              // console.log('add rectangle', this.add.rectangle)
               // const retangleBody = this.matter.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
               // retangleBody.allowGravity = false
               // const rectangle = this.add.rectangle(-600, -1000, 1000, 10000, 0xFFFF)
@@ -192,10 +196,10 @@ const Game = ({mousePos}) => {
               Axis.addEventListener("joystick:move", joystickMoveHandler);
               Axis.addEventListener("keydown", (e) => {
                 if (e.key === "a") {
-                  jumpGalette()
+                  jumpGalette(this)
                 }
               })
-              ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
+
               galetteImage = getGaletteImage()
 
               let moreHit = collisonListener(this)
@@ -272,11 +276,15 @@ const Game = ({mousePos}) => {
                 galetteImage.scaleX = scaleX * (Math.abs(galette.body.velocity.x * 0.03) + 1 )
                 galetteImage.scaleY = scaleY * (Math.abs(galette.body.velocity.y * 0.03) + 1 )
               }
-              
+            
               // Audio
-              // setAmbianceAudioOnStart(this, ambiance, ambianceVolume)
+              // choc = this.sound.add('choc', { volume: ambianceVolume});
+              // console.log(choc)
+              // sautSound = this.sound.add('sautGalette', { volume: ambianceVolume});
+              // ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
+              // ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
 
-              // TO DO : Set oiseaux sound
+              // setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
 
               // Set active platforms that can rotate
               switchRotationPlatform(
@@ -405,11 +413,11 @@ const Game = ({mousePos}) => {
       game.cameras.main.zoom = 0.2
     }
 
-    const jumpGalette = () => {
+    const jumpGalette = (game) => {
       if (jumpingCount < 2) {
         jumpingCount += 1
         galette.setVelocityY(-10.5)
-        // TO DO: Play saut sound
+        playSound(game, sautSound, ambianceVolume)
       }
     }
 
@@ -417,6 +425,10 @@ const Game = ({mousePos}) => {
       galette.setOnCollide((e) => {
         // TO DO : Set Choc sound
         game.cameras.main.shake(3, 1, 1)
+        // playSound(game, choc, ambianceVolume)
+        
+        // handleCollideWithAbeille(e)
+        
         const platformName = e.bodyB.gameObject.texture.key
         if (platformName === "platform_1" && isPlatform1Actived === false) {
           isPlatform1Actived = true

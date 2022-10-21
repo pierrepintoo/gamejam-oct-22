@@ -10,7 +10,7 @@
     align-items: center;
     background-image: url(../../../public/assets/bg/background_gameover.jpg);
     background-size: cover;
-    background-position: center;
+    background-position: unset;
 }
 
 h1 {

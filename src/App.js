@@ -2,7 +2,8 @@ import logo from './logo.svg';
 import './App.css';
 import Game from './components/Game/Game';
 import GameOver from './components/GameOver/GameOver';
-import Notice from './components/Notice/Notice.jsx';
+import Notice from './components/Notice/Notice';
+import Accueil from './components/Accueil/Accueil';
 import { useState } from 'react';
 
 function App() {
@@ -21,9 +22,8 @@ function App() {
       className="App"
       onMouseMove={(e) => handleMouseMove(e)}
       >
-      <Game 
-        mousePos={mousePos}
-      /> 
+        {/* <Accueil/> */}
+      <Game mousePos={mousePos} /> 
       {/* <GameOver/> */}
       {/* <Notice/> */}
     </div>
