@@ -305,7 +305,6 @@ const Game = ({mousePos}) => {
             
               // Audio
               choc = this.sound.add('choc', { volume: ambianceVolume});
-              console.log(choc)
               sautSound = this.sound.add('sautGalette', { volume: ambianceVolume });
               // ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               // ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
@@ -363,7 +362,6 @@ const Game = ({mousePos}) => {
 
     const createAbeille = (game, spawnPosition) => {
       const newAbeille = getAbeille(game, 0.1, spawnPosition.x, spawnPosition.y)
-      console.log(newAbeille.scale)
       newAbeille.setCollisionCategory(cat2)
       abeilles.push({
         spawnPosition: spawnPosition, 
@@ -445,7 +443,7 @@ const Game = ({mousePos}) => {
     const setCamerasParams = (game, objectToFollow) => {
       // game.cameras.main.zoom = 1
       // console.log(game.cameras.main.shake)
-      // game.cameras.main.zoom = 0.2
+      game.cameras.main.zoom = 0.2
       // setTimeout(() => {
       //   game.cameras.main.zoomTo(1, 4000, "Quart.easeInOut")
       //   game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
@@ -459,7 +457,7 @@ const Game = ({mousePos}) => {
       // game.cameras.main.zoom = 0.6
       // game.cameras.main.pan(galette.x + 100, galette.y - 800, 1000, 'Power2');
       // game.cameras.main.y += 200
-        console.log(game.cameras.main.startFollow(objectToFollow)) 
+        // console.log(game.cameras.main.startFollow(objectToFollow)) 
 
     }
 
@@ -616,7 +614,7 @@ const Game = ({mousePos}) => {
             >
               <Notice />
             </CSSTransition>
-        </div>
+          </div>
     )
 }
 
