@@ -23,6 +23,7 @@ const loadImages = (game) => {
     const bgGo = game.load.image('bg', 'assets/bg/background_gameover.jpg')
     const fog1 = game.load.image('fog_1', 'assets/bg/fog.png')
     const fog2 = game.load.image('fog_2', 'assets/bg/fog.png')
+    const halo = game.load.image('halo', 'assets/halo/halo.png')
 }
 
 const loadSounds = (game) => {

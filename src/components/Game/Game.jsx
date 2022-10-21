@@ -16,13 +16,15 @@ import Time from "../Time/Time";
 import Notice from "../Notice/Notice";
 import { CSSTransition } from "react-transition-group";
 import './style.css'
+import EndScreen from "../EndScreen/EndScreen";
 
-const Game = ({mousePos, handleGameOver}) => {
+const Game = ({mousePos, handleGameOver, handleEndGame}) => {
 
   let countHit = 0
   let previousCounthit = 0
 
   const [isStarted, setIsStarted] = useState(false)
+  const [isEnded, setIsEnded] = useState(false)
   let [onHit, setOnHit] = useState(0)
 
   useEffect(() => {
@@ -39,7 +41,7 @@ const Game = ({mousePos, handleGameOver}) => {
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
-  let canMoveCamera = false
+  let canMoveCamera = true
   let unzoomCameraTimeout
   let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10
   let platform11, platform12, platform13, platform14, platform15, platform16, platform17
@@ -124,12 +126,13 @@ const Game = ({mousePos, handleGameOver}) => {
     const config = {
         type: Phaser.AUTO,
         zoom: 1,
+        width: 2560,
+        height: 1440,
         scale: {
             mode: Phaser.Scale.FIT,
             parent: 'phaser-example',
             autoCenter: Phaser.Scale.CENTER_BOTH,
-            width: 2560,
-            height: 1440
+
         },
         backgroundColor: "#DEFAF4",
         // transparent: true,
@@ -158,6 +161,10 @@ const Game = ({mousePos, handleGameOver}) => {
             },
             create: function() {
               setFog1(this, windowW, windowH)
+
+              let halo = this.add.image(-300, 2200, 'halo')
+              halo.setDepth(2)
+
               // setFog2(this)
               // timeText = initTimer(this)
               // console.log(timeText)
@@ -225,6 +232,10 @@ const Game = ({mousePos, handleGameOver}) => {
                   console.log('FDNOOFKSDN')
                   showGameOverScreen()
                 }
+
+                if (e.key === "x") {
+                  setIsEnded(true)
+                }
               })
 
               galetteImage = getGaletteImage()
@@ -255,6 +266,9 @@ const Game = ({mousePos, handleGameOver}) => {
 
             },
             update: function(time, delta) {
+              if (activePlatform === "platform_10" && isEnded === false) {
+                setIsEnded(true)
+              }
               // gamepadEmulator.update();
               // // console.log(joystick.x)
               // if (joystick.x > 0) {
@@ -266,7 +280,7 @@ const Game = ({mousePos, handleGameOver}) => {
                 setOnHit(countHit)
                 previousCounthit += 1
               }
-              score.time = time
+              // score.time = time
 
               const abeilleCount = 4
               for (let i = 0; i < abeilleCount; i++) {
@@ -629,6 +643,8 @@ const Game = ({mousePos, handleGameOver}) => {
         <div className="game">
             {!isStarted && <Time
               onHit={onHit}
+              isEnded={isEnded}
+              handleEndGame={handleEndGame}
             />}
             <CSSTransition
               in={isStarted}
@@ -638,6 +654,7 @@ const Game = ({mousePos, handleGameOver}) => {
             >
               <Notice />
             </CSSTransition>
+            {isEnded && <EndScreen />}
           </div>
     )
 }
