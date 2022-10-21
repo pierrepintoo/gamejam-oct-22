@@ -280,7 +280,7 @@ const Game = ({mousePos, handleGameOver, handleEndGame}) => {
               }
               // score.time = time
 
-              const abeilleCount = 4
+              const abeilleCount = 5
               for (let i = 0; i < abeilleCount; i++) {
                 let abeillePosition = {x: abeilles[i].object.x , y: abeilles[i].object.y}
                 let galettePosition = {x: galette.x, y: galette.y}
