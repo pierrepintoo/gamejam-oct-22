@@ -4,7 +4,7 @@ import getKeyDatas from "./getKeyDatas";
 import { rotateGround, resetAngle, switchRotationPlatform } from "./Ground";
 import { loadImages, loadSounds } from "./Loader";
 import { getGalette, getGaletteImage } from "./Galette";
-import { setBackground } from "./Background";
+import { moveFog1, moveFog2, setBackground, setFog1, setFog2 } from "./Background";
 import Axis from "axis-api";
 import SoundFadePlugin from 'phaser3-rex-plugins/plugins/soundfade-plugin.js';
 import { playSound, setAmbianceAudioOnStart } from "./Audio";
@@ -112,12 +112,12 @@ const Game = ({mousePos}) => {
             width: window.innerWidth,
             height: window.innerHeight
         },
-        // backgroundColor: "#ffffff00",
-        transparent: true,
+        backgroundColor: "#DEFAF4",
+        // transparent: true,
         physics: {
           default: 'matter',
           matter: {
-              debug: true,
+              debug: false,
               showStaticBody: true,
               gravity: {
                   y: 1
@@ -138,6 +138,8 @@ const Game = ({mousePos}) => {
               this.load.spritesheet('renard', 'assets/spritesheet/renard.gif', { frameWidth: 104, frameHeight: 104, endFrame: 38 });
             },
             create: function() {
+              setFog1(this, windowW, windowH)
+              // setFog2(this)
               // timeText = initTimer(this)
               // console.log(timeText)
               // console.log('add rectangle', this.add.rectangle)
@@ -228,6 +230,8 @@ const Game = ({mousePos}) => {
 
             },
             update: function(time, delta) {
+              moveFog1(time)
+              // moveFog2(time)
               if (countHit !== previousCounthit) {
                 setOnHit(countHit)
                 previousCounthit += 1
@@ -242,7 +246,7 @@ const Game = ({mousePos}) => {
                 let directionToSpawn = new Phaser.Math.Vector2(abeilles[i].spawnPosition.x - abeillePosition.x, abeilles[i].spawnPosition.y - abeillePosition.y).normalize()
                 const distanceGaletteAbeilleSpawn = new Phaser.Math.Vector2(galettePosition.x - abeilles[i].spawnPosition.x, galettePosition.y - abeilles[i].spawnPosition.y).length()
                 
-                if (distanceGaletteAbeilleSpawn < 500) {
+                if (distanceGaletteAbeilleSpawn < 700) {
                   const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.2 * delta, 0.2 * delta))
     
                   abeilles[i].object.x += abeilleSpeed.x
@@ -321,7 +325,7 @@ const Game = ({mousePos}) => {
     };
 
     const createAbeille = (game, spawnPosition) => {
-      const newAbeille = getAbeille(game, 0.03, spawnPosition.x, spawnPosition.y)
+      const newAbeille = getAbeille(game, 0.1, spawnPosition.x, spawnPosition.y)
       console.log(newAbeille.scale)
       newAbeille.setCollisionCategory(cat2)
       abeilles.push({
