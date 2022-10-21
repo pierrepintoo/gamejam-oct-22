@@ -120,7 +120,7 @@ const Game = ({mousePos, handleGameOver}) => {
     }
 
     const config = {
-        type: Phaser.WEBGL,
+        type: Phaser.AUTO,
         scale: {
             mode: Phaser.Scale.FIT,
             parent: 'phaser-example',
