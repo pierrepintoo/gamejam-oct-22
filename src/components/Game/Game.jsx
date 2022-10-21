@@ -193,10 +193,11 @@ const Game = ({mousePos}) => {
               //   abeilles.push(newAbeille)
 
               // }
-              createAbeille(this, {x: 900, y: -900})
-              createAbeille(this, {x: 700, y: -450})
+              createAbeille(this, {x: 100, y: -900})
+              createAbeille(this, {x: 700, y: -650})
               createAbeille(this, {x: 100, y: 200})
               createAbeille(this, {x: -100, y: 1200})
+              createAbeille(this, {x: 2100, y: 0})
 
               galette = getGalette(this, scaleXY)
               galette.setCollisionCategory(cat1)
@@ -443,21 +444,31 @@ const Game = ({mousePos}) => {
     const setCamerasParams = (game, objectToFollow) => {
       // game.cameras.main.zoom = 1
       // console.log(game.cameras.main.shake)
+      // game.cameras.main.y = 200
+      
       game.cameras.main.zoom = 0.2
+
+      // ON START CAMERA
+      // game.cameras.main.zoom = 0.45
+      // game.cameras.main.centerOn(galette.x + 200, 1500)
       // setTimeout(() => {
-      //   game.cameras.main.zoomTo(1, 4000, "Quart.easeInOut")
       //   game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
       //   });
       //   setTimeout(() => {
-      //     canMoveCamera = true
-      //     console.log(game.cameras.main.startFollow(objectToFollow)) 
+      //     game.cameras.main.zoomTo(1, 1000, "Quart.easeInOut")
+      //     setTimeout(() => {
+      //       canMoveCamera = true
+      //       game.cameras.main.startFollow(objectToFollow)
+      //     }, 1050)
       //   }, 4050)
 
       // }, 1000)
+
+
       // game.cameras.main.zoom = 0.6
       // game.cameras.main.pan(galette.x + 100, galette.y - 800, 1000, 'Power2');
       // game.cameras.main.y += 200
-        // console.log(game.cameras.main.startFollow(objectToFollow)) 
+        // console.log(game.cameras.main.startFollow(objectToFollow))
 
     }
 
