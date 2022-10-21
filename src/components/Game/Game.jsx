@@ -73,7 +73,7 @@ const Game = ({mousePos, handleGameOver}) => {
   const positionPlatform15 = {x: -1100, y: -100}
   const positionPlatform16 = {x: 2100, y: 100}
   const positionPlatform17 = {x: 600, y: -1300}
-  const joystick = {x: 0, y: 0}
+  let joystick = {x: 0, y: 0}
   let ambiance
   let ambianceForet
   let sautSound
@@ -91,10 +91,12 @@ const Game = ({mousePos, handleGameOver}) => {
   const gamepadEmulator = Axis.createGamepadEmulator(0)
   Axis.joystick1.setGamepadEmulatorJoystick(gamepadEmulator, 0)
   const joystickMoveHandler = (e) => {
+    // console.log(e.id, e.position)
     // Get the joystick id in the event payload object
     if (e.id === 1) {
         joystick.x = e.position.x
         joystick.y = e.position.y
+        // console.log('joystick.x', joystick.x)
     }
   }
 
@@ -253,6 +255,11 @@ const Game = ({mousePos, handleGameOver}) => {
 
             },
             update: function(time, delta) {
+              // gamepadEmulator.update();
+              // // console.log(joystick.x)
+              // if (joystick.x > 0) {
+              //   console.log(joystick)
+              // }
               moveFog1(time)
               // moveFog2(time)
               if (countHit !== previousCounthit) {
@@ -315,7 +322,6 @@ const Game = ({mousePos, handleGameOver}) => {
               ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
 
               setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
-
               // Set active platforms that can rotate
               switchRotationPlatform(
                 this,
@@ -457,13 +463,14 @@ const Game = ({mousePos, handleGameOver}) => {
       // game.cameras.main.zoom = 0.2
 
       // ON START CAMERA
+      // game.cameras.main.setBounds(0, 400, 2560, 1440)
       game.cameras.main.zoom = 0.7
-      game.cameras.main.centerOn(galette.x + 400, 1500)
+      game.cameras.main.centerOn(galette.x, 1500)
       setTimeout(() => {
         game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
         });
         setTimeout(() => {
-          game.cameras.main.zoomTo(1, 1000, "Quart.easeInOut")
+          game.cameras.main.zoomTo(1.65, 1000, "Quart.easeInOut")
           setTimeout(() => {
             canMoveCamera = true
             game.cameras.main.startFollow(objectToFollow)

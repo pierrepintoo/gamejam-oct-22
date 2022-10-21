@@ -1,18 +1,21 @@
 let angleCount = 0
 
 export const rotateGround = (game, graphics, keyA, keyS, windowW, windowH, joystickData, canMoveCamera) => {
+  // console.log('joystickData', joystickData)
     const anchorLineX = windowW / 2
     const anchorLineY = windowH / 2 + 300 // + 300 to put down the platform
     const startLineX = -anchorLineX - 400
     const endLineX = anchorLineX + 400
-
+    // console.log(joystickData)
     if(keyA.isDown && canMoveCamera) {
       graphics.rotation = graphics.rotation + 0.03
-      graphics.rotation = graphics.rotation + joystickData.x * 0.1
-  } else if(keyS.isDown && canMoveCamera) {
+    } else if(keyS.isDown && canMoveCamera) {
       graphics.rotation = graphics.rotation - 0.03
-      graphics.rotation = graphics.rotation - joystickData.x * 0.1
     }
+    if (canMoveCamera) {
+      graphics.rotation = graphics.rotation + (joystickData.x * 0.06)
+    }
+
 }
 
 export const resetAngle = () => {
@@ -76,6 +79,7 @@ export const switchRotationPlatform = (
   joystick,
   canMoveCamera
 ) => {
+  // console.log('joystick', joystick)
     switch(activePlatform) {
         case 'platform_1':
           // if (isPlatform1Resetted === false) {
