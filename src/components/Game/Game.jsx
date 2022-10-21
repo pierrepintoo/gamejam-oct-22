@@ -439,6 +439,14 @@ const Game = ({mousePos}) => {
       // game.cameras.main.zoom = 1
       // console.log(game.cameras.main.shake)
       game.cameras.main.zoom = 0.2
+      // setTimeout(() => {
+      //   game.cameras.main.zoomTo(1, 4000, "Quart.easeInOut")
+      //   game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut');
+
+      // }, 1000)
+      // game.cameras.main.zoom = 0.6
+      // game.cameras.main.pan(galette.x + 100, galette.y - 800, 1000, 'Power2');
+      // game.cameras.main.y += 200
     }
 
     const jumpGalette = (game) => {
