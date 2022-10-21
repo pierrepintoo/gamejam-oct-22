@@ -59,7 +59,7 @@ const Game = ({mousePos}) => {
   const positionPlatform7 = {x: 500, y: 800}
   const positionPlatform8 = {x: 200, y: 1300}
   const positionPlatform9 = {x: -200, y: 1800}
-  const positionPlatform10 = {x: 250, y: 2200}
+  const positionPlatform10 = {x: -550, y: 2200}
   const joystick = {x: 0, y: 0}
   let ambiance
   const ambianceVolume = 0.5
@@ -132,6 +132,7 @@ const Game = ({mousePos}) => {
             preload: function() {
               loadImages(this)
               loadSounds(this)
+              this.load.spritesheet('renard', 'assets/spritesheet/renard.gif', { frameWidth: 104, frameHeight: 104, endFrame: 38 });
             },
             create: function() {
               // timeText = initTimer(this)
@@ -148,7 +149,7 @@ const Game = ({mousePos}) => {
               // retangleBody.setDepth(5)
 
               // const retangleBody2 = this.matter.add.rectangle(0, 1000, 10000)
-              // const rectangleImage2 = this.add.rectangle(2300, 1000, 1000, 10000, '#fff')
+              // const rectangleImage2 = this.add.rectangle(2600, 1000, 1000, 10000, '#fff')
               // let rectangle2 = this.matter.add.gameObject(rectangleImage2, retangleBody2)
               // rectangle2.setDepth(5)
 
@@ -172,14 +173,14 @@ const Game = ({mousePos}) => {
 
               // }
               createAbeille(this, {x: 900, y: -900})
-              createAbeille(this, {x: -100, y: -550})
+              createAbeille(this, {x: 700, y: -450})
               createAbeille(this, {x: 100, y: 200})
               createAbeille(this, {x: -100, y: 1200})
 
               galette = getGalette(this, scaleXY)
               galette.setCollisionCategory(cat1)
 
-              galetteCollideListener()
+              galetteCollideListener(this)
 
               setBackground(this, windowW, windowH)
               
@@ -198,7 +199,29 @@ const Game = ({mousePos}) => {
               galetteImage = getGaletteImage()
 
               let moreHit = collisonListener(this)
-              console.log(moreHit)
+
+              const sao1 = [ 2, 3, 5, 6, 12, 13, 14, 20, 21, 22, 27, 28, 29, 34, 35, 36, 37 ];
+              // let frames
+              // //  And insert the frames into the array:
+              // for (var i = 0; i <= 50; i++)
+              // {
+
+              //         frames.push({ key: 'sao10', frame: i.toString() });
+              // }
+
+              console.log(this.anims.generateFrameNumbers('renard'))
+
+              let config = {
+                key: 'renardDance',
+                frames: this.anims.generateFrameNumbers('renard'),
+                frameRate: 25,
+                repeat: -1
+              };
+        
+              // this.anims.create(config);
+              // // const bodyRenard = this.matter.add.rectangle(200, 200, 500)
+              const renard = this.matter.add.sprite(-200, 2100 , 'renard').play('renardDance');
+
             },
             update: function(time, delta) {
               if (countHit !== previousCounthit) {
@@ -206,7 +229,7 @@ const Game = ({mousePos}) => {
                 previousCounthit += 1
               }
               score.time = time
-              // console.log(score.time)
+
               const abeilleCount = 4
               for (let i = 0; i < abeilleCount; i++) {
                 let abeillePosition = {x: abeilles[i].object.x , y: abeilles[i].object.y}
@@ -214,8 +237,6 @@ const Game = ({mousePos}) => {
                 let direction = new Phaser.Math.Vector2(galettePosition.x - abeillePosition.x, galettePosition.y - abeillePosition.y).normalize()
                 let directionToSpawn = new Phaser.Math.Vector2(abeilles[i].spawnPosition.x - abeillePosition.x, abeilles[i].spawnPosition.y - abeillePosition.y).normalize()
                 const distanceGaletteAbeilleSpawn = new Phaser.Math.Vector2(galettePosition.x - abeilles[i].spawnPosition.x, galettePosition.y - abeilles[i].spawnPosition.y).length()
-                
-                console.log(abeillePosition.x, abeilles[i].spawnPosition.x)
                 
                 if (distanceGaletteAbeilleSpawn < 500) {
                   const abeilleSpeed = direction.multiply(new Phaser.Math.Vector2(0.2 * delta, 0.2 * delta))
@@ -235,12 +256,14 @@ const Game = ({mousePos}) => {
                 } else {
                   abeilles[i].object.y = abeilles[i].spawnPosition.y + Math.sin(time * 0.005) * 10
                 }
-                
-
-                // abeilles[i].setPosition(abeilles[i].x + abeilleSpeed.x)
-                // abeilles[i].setPosition(abeilles[i].y + abeilleSpeed.y)
               }
               
+              // Moving platforms
+              platform5.x = 200 + Math.sin(time * 0.001) * 200
+              platform6.x = -200 + Math.cos(time * 0.001) * 300
+
+              platform7.rotation = time * 0.001
+              platform8.rotation = (time + 1000) * (-0.001)
 
               // Galette that rotate with velocity (because friction = 0)
               setRotationWithVelocity()
@@ -378,6 +401,7 @@ const Game = ({mousePos}) => {
     const setCamerasParams = (game, objectToFollow) => {
       // game.cameras.main.startFollow(objectToFollow) 
       // game.cameras.main.zoom = 1
+      // console.log(game.cameras.main.shake)
       game.cameras.main.zoom = 0.2
     }
 
@@ -389,10 +413,10 @@ const Game = ({mousePos}) => {
       }
     }
 
-    const galetteCollideListener = () => {
+    const galetteCollideListener = (game) => {
       galette.setOnCollide((e) => {
-        // TO DO : Set Choc sound 
-
+        // TO DO : Set Choc sound
+        game.cameras.main.shake(3, 1, 1)
         const platformName = e.bodyB.gameObject.texture.key
         if (platformName === "platform_1" && isPlatform1Actived === false) {
           isPlatform1Actived = true
