@@ -11,6 +11,7 @@ function App() {
   const [mousePos, setMousePos] = useState({x: 0, y: 0})
   const [isGameOverScreenVisible, setIsGameOverScreenVisible] = useState(false)
   const [isEndScreenVisible, setIsEndScreenVisible] = useState(false)
+  const [time, setTime] = useState("")
 
   const handleMouseMove = (e) => {
     // console.log(e.clientX)
@@ -26,7 +27,9 @@ function App() {
     setIsGameOverScreenVisible(true)
   }
 
-  const handleEndGame = () => {
+  const handleEndGame = (time) => {
+    console.log('time', time)
+    setTime(time)
     setIsEndScreenVisible(true)
   }
 
@@ -38,7 +41,7 @@ function App() {
         <Game 
             mousePos={mousePos}
             handleGameOver={() => handleGameOver()}
-            handleEndGame={() => handleEndGame()}
+            handleEndGame={handleEndGame}
           />
        </>
         
@@ -56,10 +59,10 @@ function App() {
       {isGameOverScreenVisible === false && <Game 
             mousePos={mousePos}
             handleGameOver={() => handleGameOver()}
-            handleEndGame={() => handleEndGame()}
+            handleEndGame={handleEndGame}
           />}
       {isGameOverScreenVisible && <GameOver/>}
-      {isEndScreenVisible && <EndScreen />}
+      {isEndScreenVisible && <EndScreen timeString={time}/>}
       {/* <Notice/>  */}
     </div>
   );

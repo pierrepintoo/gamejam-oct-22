@@ -57,9 +57,7 @@ const Time = ({onHit, isEnded, handleEndGame}) => {
                 </div>
             </>
             
-            : <EndScreen 
-            timerString={timer.timerText.split(":")[1] + ":" + timer.timerText.split(":")[2] + ":" + timer.timerText.split(":")[3]}
-        />}
+            : null}
         </section>
     )
 }

@@ -1,6 +1,42 @@
+
 .end_screen {
     position: absolute;
     z-index: 9999;
     width: 100vw;
     height: 100vh;
+    background-color: #DEFAF4 ;
+    font-family: blocus;
+    background-image: url(../../../public/assets/bg/background_noticedujeu.jpg);
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.end_screen__title {
+    margin: auto;
+    font-size: 6em;
+    position: relative;
+    bottom: 0;
+}
+
+.end_screen__time {
+    text-align: center;
+    margin-bottom: 200px;
+    position: relative;
+    bottom: 0px;
+    font-weight: 700;
+}
+
+.end_screen__button {
+    margin-top: 2em;
+    text-decoration: none;
+    font-size: 4em;
+    transition: all .2s ease;
+    margin-bottom: 0em;
+    color: #FFBB7B;
+    border-bottom: solid 2px #FFBB7B;
+    width: fit-content;
+    margin: auto;
 }

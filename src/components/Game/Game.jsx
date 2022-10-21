@@ -41,7 +41,7 @@ const Game = ({mousePos, handleGameOver, handleEndGame}) => {
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
-  let canMoveCamera = true
+  let canMoveCamera = false
   let unzoomCameraTimeout
   let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10
   let platform11, platform12, platform13, platform14, platform15, platform16, platform17
@@ -233,8 +233,7 @@ const Game = ({mousePos, handleGameOver, handleEndGame}) => {
                   showGameOverScreen()
                 }
 
-                if (e.key === "x") {
-                  setIsEnded(true)
+                if (e.key === "") {
                 }
               })
 
@@ -654,7 +653,7 @@ const Game = ({mousePos, handleGameOver, handleEndGame}) => {
             >
               <Notice />
             </CSSTransition>
-            {isEnded && <EndScreen />}
+            {/* {isEnded && <EndScreen />} */}
           </div>
     )
 }
