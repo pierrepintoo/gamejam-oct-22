@@ -121,12 +121,13 @@ const Game = ({mousePos, handleGameOver}) => {
 
     const config = {
         type: Phaser.AUTO,
+        zoom: 1,
         scale: {
             mode: Phaser.Scale.FIT,
             parent: 'phaser-example',
             autoCenter: Phaser.Scale.CENTER_BOTH,
-            width: window.innerWidth,
-            height: window.innerHeight
+            width: 2560,
+            height: 1440
         },
         backgroundColor: "#DEFAF4",
         // transparent: true,
