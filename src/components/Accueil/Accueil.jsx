@@ -3,8 +3,9 @@ import './accueil.css'
 const Notice = () => {
     return (
         <div className="accueil">
-            {/* <h1>Game over</h1>
-            <img className='platform' src="assets\platforms\plateforme-go.png" alt="platform" /> */}
+            <img className='title' src="assets\bg\logo_renard.png" alt="title" />
+            <a href=''>Jouer</a>
+            <img className='platform' src="assets\platforms\plateforme-go.png" alt="platform" />
         </div>
     )
 }

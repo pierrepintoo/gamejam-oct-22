@@ -304,8 +304,8 @@ const Game = ({mousePos}) => {
               }
             
               // Audio
-              // choc = this.sound.add('choc', { volume: ambianceVolume});
-              // console.log(choc)
+              choc = this.sound.add('choc', { volume: ambianceVolume});
+              console.log(choc)
               sautSound = this.sound.add('sautGalette', { volume: ambianceVolume });
               // ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               // ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
