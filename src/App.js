@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 function App() {
   const [mousePos, setMousePos] = useState({x: 0, y: 0})
+  const [isGameOverScreenVisible, setIsGameOverScreenVisible] = useState(false)
 
   const handleMouseMove = (e) => {
     // console.log(e.clientX)
@@ -17,15 +18,23 @@ function App() {
     }
     setMousePos(newMousePos)
   }
+
+  const handleGameOver = () => {
+    console.log('go')
+    setIsGameOverScreenVisible(true)
+  }
   return (
     <div 
       className="App"
       onMouseMove={(e) => handleMouseMove(e)}
       >
         {/* <Accueil/> */}
-      <Game mousePos={mousePos} /> 
-      {/* <GameOver/>
-      <Notice/>  */}
+      {!isGameOverScreenVisible && <Game 
+        mousePos={mousePos}
+        handleGameOver={() => handleGameOver()}
+      />} 
+      {isGameOverScreenVisible && <GameOver/>}
+      {/* <Notice/>  */}
     </div>
   );
 }

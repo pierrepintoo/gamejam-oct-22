@@ -25,12 +25,14 @@ a {
     transition: all .2s ease;
     border-bottom: solid 2px transparent;
     margin-bottom: 0em;
-}
-
-a:hover {
     color: #FFBB7B;
     border-bottom: solid 2px #FFBB7B;
 }
+
+/* a:hover {
+    color: #FFBB7B;
+    border-bottom: solid 2px #FFBB7B;
+} */
 
 .platform {
     margin-top: 1em;

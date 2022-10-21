@@ -17,7 +17,7 @@ import Notice from "../Notice/Notice";
 import { CSSTransition } from "react-transition-group";
 import './style.css'
 
-const Game = ({mousePos}) => {
+const Game = ({mousePos, handleGameOver}) => {
 
   let countHit = 0
   let previousCounthit = 0
@@ -84,7 +84,8 @@ const Game = ({mousePos}) => {
   let cat1, cat2
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
-  Axis.registerKeys("d", "x", 1); // keyboard key "q" to button "a" from group 1
+  Axis.registerKeys("d", "x", 1); // keyboard key "d" to button "x" from group 1
+  Axis.registerKeys("w", "w", 1); // keyboard key "q" to button "a" from group 1
 
   // For Joystick
   const gamepadEmulator = Axis.createGamepadEmulator(0)
@@ -219,6 +220,11 @@ const Game = ({mousePos}) => {
                 if (e.key === "x") {
                   accelerateGalette(this)
                 }
+                console.log(e.key)
+                if (e.key === "w") {
+                  console.log('FDNOOFKSDN')
+                  showGameOverScreen()
+                }
               })
 
               galetteImage = getGaletteImage()
@@ -307,10 +313,10 @@ const Game = ({mousePos}) => {
               // Audio
               choc = this.sound.add('choc', { volume: ambianceVolume});
               sautSound = this.sound.add('sautGalette', { volume: ambianceVolume });
-              // ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
-              // ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
+              ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
+              ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
 
-              // setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
+              setAmbianceAudioOnStart(this, ambiance, ambianceForet, ambianceVolume)
 
               // Set active platforms that can rotate
               switchRotationPlatform(
@@ -368,6 +374,10 @@ const Game = ({mousePos}) => {
         spawnPosition: spawnPosition, 
         object: newAbeille
       })
+    }
+
+    const showGameOverScreen = () => {
+      handleGameOver()
     }
 
     const collisonListener = (game) => {
@@ -446,23 +456,23 @@ const Game = ({mousePos}) => {
       // console.log(game.cameras.main.shake)
       // game.cameras.main.y = 200
       
-      game.cameras.main.zoom = 0.2
+      // game.cameras.main.zoom = 0.2
 
       // ON START CAMERA
-      // game.cameras.main.zoom = 0.45
-      // game.cameras.main.centerOn(galette.x + 200, 1500)
-      // setTimeout(() => {
-      //   game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
-      //   });
-      //   setTimeout(() => {
-      //     game.cameras.main.zoomTo(1, 1000, "Quart.easeInOut")
-      //     setTimeout(() => {
-      //       canMoveCamera = true
-      //       game.cameras.main.startFollow(objectToFollow)
-      //     }, 1050)
-      //   }, 4050)
+      game.cameras.main.zoom = 0.45
+      game.cameras.main.centerOn(galette.x + 200, 1500)
+      setTimeout(() => {
+        game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
+        });
+        setTimeout(() => {
+          game.cameras.main.zoomTo(1, 1000, "Quart.easeInOut")
+          setTimeout(() => {
+            canMoveCamera = true
+            game.cameras.main.startFollow(objectToFollow)
+          }, 1050)
+        }, 4050)
 
-      // }, 1000)
+      }, 1000)
 
 
       // game.cameras.main.zoom = 0.6
