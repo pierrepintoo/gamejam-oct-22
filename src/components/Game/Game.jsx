@@ -304,8 +304,7 @@ const Game = ({mousePos}) => {
               }
             
               // Audio
-              choc = this.sound.add('choc', { volume: ambianceVolume});
-              console.log(choc)
+              // choc = this.sound.add('choc', { volume: ambianceVolume});
               sautSound = this.sound.add('sautGalette', { volume: ambianceVolume });
               // ambiance = this.sound.add('ambiance', {loop: true, volume: ambianceVolume})
               // ambianceForet = this.sound.add('ambianceForet', {loop: true, volume: ambianceVolume})
@@ -489,15 +488,13 @@ const Game = ({mousePos}) => {
           
           
         // }
-        // playSound(game, sautSound, ambianceVolume)
       }
     }
 
     const galetteCollideListener = (game) => {
       galette.setOnCollide((e) => {
-        // TO DO : Set Choc sound
         game.cameras.main.shake(3, 1, 1)
-        // playSound(game, choc, ambianceVolume)
+        // choc.play()
         
         // handleCollideWithAbeille(e)
         

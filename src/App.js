@@ -22,9 +22,9 @@ function App() {
       className="App"
       onMouseMove={(e) => handleMouseMove(e)}
       >
-        <Accueil/>
-      {/* <Game mousePos={mousePos} /> 
-      <GameOver/>
+        {/* <Accueil/> */}
+      <Game mousePos={mousePos} /> 
+      {/* <GameOver/>
       <Notice/> */}
     </div>
   );
