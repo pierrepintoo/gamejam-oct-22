@@ -39,7 +39,7 @@ const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
-  let canMoveCamera = false
+  let canMoveCamera = true
   let unzoomCameraTimeout
   let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10
   let platform11, platform12, platform13, platform14, platform15, platform16, platform17
@@ -79,10 +79,12 @@ const Game = ({mousePos}) => {
   let sautSound
   let choc
   const ambianceVolume = 0.5
+  const rotationSpeed = 0.0005
 
   let cat1, cat2
   // Map key axis
   Axis.registerKeys(" ", "a", 1); // keyboard key "q" to button "a" from group 1
+  Axis.registerKeys("d", "x", 1); // keyboard key "q" to button "a" from group 1
 
   // For Joystick
   const gamepadEmulator = Axis.createGamepadEmulator(0)
@@ -213,7 +215,7 @@ const Game = ({mousePos}) => {
                 if (e.key === "a") {
                   jumpGalette(this)
                 }
-                if (e.key === "d") {
+                if (e.key === "x") {
                   accelerateGalette(this)
                 }
               })
@@ -287,11 +289,11 @@ const Game = ({mousePos}) => {
               platform12.x = 1200 + Math.cos((time + 3500)* 0.001) * 300
               platform14.x = 1400 + Math.cos((time + 3500)* 0.001) * 600
 
-              platform1.rotation = (time + 67189) * (-0.001)
-              platform3.rotation = (time + 7814) * 0.001
-              platform6.rotation = time * 0.001
-              platform8.rotation = (time + 1000) * (-0.001)
-              platform13.rotation = (time + 3000) * 0.001
+              platform1.rotation = (time + 67189) * (-rotationSpeed)
+              platform3.rotation = (time + 7814) * rotationSpeed
+              platform6.rotation = time * rotationSpeed
+              platform8.rotation = (time + 1000) * (-rotationSpeed)
+              platform13.rotation = (time + 3000) * rotationSpeed
 
               // Galette that rotate with velocity (because friction = 0)
               setRotationWithVelocity()
@@ -443,29 +445,32 @@ const Game = ({mousePos}) => {
     const setCamerasParams = (game, objectToFollow) => {
       // game.cameras.main.zoom = 1
       // console.log(game.cameras.main.shake)
-      game.cameras.main.zoom = 0.2
-      setTimeout(() => {
-        game.cameras.main.zoomTo(1, 4000, "Quart.easeInOut")
-        game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
-        });
-        setTimeout(() => {
-          canMoveCamera = true
-          console.log(game.cameras.main.startFollow(objectToFollow)) 
-        }, 4050)
+      // game.cameras.main.zoom = 0.2
+      // setTimeout(() => {
+      //   game.cameras.main.zoomTo(1, 4000, "Quart.easeInOut")
+      //   game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
+      //   });
+      //   setTimeout(() => {
+      //     canMoveCamera = true
+      //     console.log(game.cameras.main.startFollow(objectToFollow)) 
+      //   }, 4050)
 
-      }, 1000)
+      // }, 1000)
       // game.cameras.main.zoom = 0.6
       // game.cameras.main.pan(galette.x + 100, galette.y - 800, 1000, 'Power2');
       // game.cameras.main.y += 200
+        console.log(game.cameras.main.startFollow(objectToFollow)) 
+
     }
 
     const accelerateGalette = () => {
-      console.log('accelerate')
       if (canMoveCamera) {
         if (galette.body.velocity.x > 0) {
-          galette.setVelocityX(10)
+          galette.setVelocityX(galette.body.velocity.x + 7.5)
+          galette.setVelocityY(galette.body.velocity.y - 6)
         } else if (galette.body.velocity.x < 0) {
-          galette.setVelocityX(-10)
+          galette.setVelocityX(galette.body.velocity.x - 7.5)
+          galette.setVelocityY(galette.body.velocity.y - 6)
         }
       }
     }
@@ -473,7 +478,7 @@ const Game = ({mousePos}) => {
     const jumpGalette = async (game) => {
       if (jumpingCount < 2 && canMoveCamera) {
         jumpingCount += 1
-        galette.setVelocityY(-10.5)
+        galette.setVelocityY(-13.5)
         sautSound.play()
         // console.log(game.cameras.main.zoomEffect.isRunning)
         // if (game.cameras.main.zoomEffect.isRunning === false && canMoveCamera) {
@@ -497,71 +502,71 @@ const Game = ({mousePos}) => {
         // handleCollideWithAbeille(e)
         
         const platformName = e.bodyB.gameObject.texture.key
-        if (platformName === "platform_1" && isPlatform1Actived === false) {
+        if (platformName === "platform_1") {
           isPlatform1Actived = true
           jumpingCount = 0
           activePlatform = 'platform_1'
-        } else if (platformName === "platform_2" && isPlatform2Actived === false) {
+        } else if (platformName === "platform_2") {
           isPlatform2Actived = true
           jumpingCount = 0
           activePlatform = 'platform_2'
-        } else if (platformName === "platform_3" && isPlatform3Actived === false) {
+        } else if (platformName === "platform_3") {
           isPlatform3Actived = true
           jumpingCount = 0
           activePlatform = 'platform_3'
-        } else if (platformName === "platform_4" && isPlatform4Actived === false) {
+        } else if (platformName === "platform_4") {
           isPlatform4Actived = true
           activePlatform = 'platform_4'
           jumpingCount = 0
-        } else if (platformName === "platform_5" && isPlatform5Actived === false) {
+        } else if (platformName === "platform_5") {
           isPlatform5Actived = true
           activePlatform = 'platform_5'
           jumpingCount = 0
-        } else if (platformName === "platform_6" && isPlatform6Actived === false) {
+        } else if (platformName === "platform_6") {
           isPlatform6Actived = true
           activePlatform = 'platform_6'
           jumpingCount = 0
-        } else if (platformName === "platform_7" && isPlatform7Actived === false) {
+        } else if (platformName === "platform_7") {
           isPlatform7Actived = true
           activePlatform = 'platform_7'
           jumpingCount = 0
-        } else if (platformName === "platform_8" && isPlatform8Actived === false) {
+        } else if (platformName === "platform_8") {
           isPlatform8Actived = true
           activePlatform = 'platform_8'
           jumpingCount = 0
-        } else if (platformName === "platform_9" && isPlatform9Actived === false) {
+        } else if (platformName === "platform_9") {
           isPlatform9Actived = true
           activePlatform = 'platform_9'
           jumpingCount = 0
-        } else if (platformName === "platform_10" && isPlatform10Actived === false) {
+        } else if (platformName === "platform_10") {
           isPlatform10Actived = true
           activePlatform = 'platform_10'
           jumpingCount = 0
-        } else if (platformName === "platform_11" && isPlatform11Actived === false) {
+        } else if (platformName === "platform_11") {
           isPlatform11Actived = true
           activePlatform = 'platform_11'
           jumpingCount = 0
-        } else if (platformName === "platform_12" && isPlatform12Actived === false) {
+        } else if (platformName === "platform_12") {
           isPlatform12Actived = true
           activePlatform = 'platform_12'
           jumpingCount = 0
-        } else if (platformName === "platform_13" && isPlatform13Actived === false) {
+        } else if (platformName === "platform_13") {
           isPlatform13Actived = true
           activePlatform = 'platform_13'
           jumpingCount = 0
-        } else if (platformName === "platform_14" && isPlatform14Actived === false) {
+        } else if (platformName === "platform_14") {
           isPlatform14Actived = true
           activePlatform = 'platform_14'
           jumpingCount = 0
-        } else if (platformName === "platform_15" && isPlatform15Actived === false) {
+        } else if (platformName === "platform_15") {
           isPlatform15Actived = true
           activePlatform = 'platform_15'
           jumpingCount = 0
-        } else if (platformName === "platform_16" && isPlatform16Actived === false) {
+        } else if (platformName === "platform_16") {
           isPlatform16Actived = true
           activePlatform = 'platform_16'
           jumpingCount = 0
-        } else if (platformName === "platform_17" && isPlatform17Actived === false) {
+        } else if (platformName === "platform_17") {
           isPlatform17Actived = true
           activePlatform = 'platform_17'
           jumpingCount = 0

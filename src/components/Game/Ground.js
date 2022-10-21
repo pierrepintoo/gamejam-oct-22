@@ -78,123 +78,123 @@ export const switchRotationPlatform = (
 ) => {
     switch(activePlatform) {
         case 'platform_1':
-          if (isPlatform1Resetted === false) {
-            resetAngle()
-            isPlatform1Resetted = true
-          }
+          // if (isPlatform1Resetted === false) {
+          //   resetAngle()
+          //   isPlatform1Resetted = true
+          // }
           rotateGround(game, platform1, keyA, keyS, positionPlatform1.x, positionPlatform1.y, joystick, canMoveCamera)
         break
         case 'platform_2':
-          if (isPlatform2Resetted === false) {
-            resetAngle()
-            isPlatform2Resetted = true
-          }
+          // if (isPlatform2Resetted === false) {
+          //   resetAngle()
+          //   isPlatform2Resetted = true
+          // }
           rotateGround(game, platform2, keyA, keyS, positionPlatform2.x, positionPlatform2.y, joystick, canMoveCamera)
         break
         case 'platform_3':
-          if (isPlatform3Resetted === false) {
-            resetAngle()
-            isPlatform3Resetted = true
-          }
+          // if (isPlatform3Resetted === false) {
+          //   resetAngle()
+          //   isPlatform3Resetted = true
+          // }
           rotateGround(game, platform3, keyA, keyS, positionPlatform3.x, positionPlatform3.y, joystick, canMoveCamera)
         break
         case 'platform_4':
-          if (isPlatform4Resetted === false) {
-            resetAngle()
-            isPlatform4Resetted = true
-          }
+          // if (isPlatform4Resetted === false) {
+          //   resetAngle()
+          //   isPlatform4Resetted = true
+          // }
           rotateGround(game, platform4, keyA, keyS, positionPlatform4.x, positionPlatform4.y, joystick, canMoveCamera)
         break
         case 'platform_5':
-            if (isPlatform5Resetted === false) {
-                resetAngle()
-                isPlatform5Resetted = true
-            }
+            // if (isPlatform5Resetted === false) {
+            //     resetAngle()
+            //     isPlatform5Resetted = true
+            // }
           rotateGround(game, platform5, keyA, keyS, positionPlatform5.x, positionPlatform5.y, joystick, canMoveCamera)
         break
         case 'platform_6':
-            if (isPlatform6Resetted === false) {
-                resetAngle()
-                isPlatform6Resetted = true
-            }
+            // if (isPlatform6Resetted === false) {
+            //     resetAngle()
+            //     isPlatform6Resetted = true
+            // }
           rotateGround(game, platform6, keyA, keyS, positionPlatform6.x, positionPlatform6.y, joystick, canMoveCamera)
         break
         case 'platform_7':
-            if (isPlatform7Resetted === false) {
-              console.log('plateforme 7 actived')
-                // resetAngle()
-                isPlatform7Resetted = true
-            }
+            // if (isPlatform7Resetted === false) {
+            //   console.log('plateforme 7 actived')
+            //     resetAngle()
+            //     isPlatform7Resetted = true
+            // }
           rotateGround(game, platform7, keyA, keyS, positionPlatform7.x, positionPlatform7.y, joystick, canMoveCamera)
         break
         case 'platform_8':
-            if (isPlatform8Resetted === false) {
-                // resetAngle()
-                isPlatform8Resetted = true
-            }
+            // if (isPlatform8Resetted === false) {
+            //     resetAngle()
+            //     isPlatform8Resetted = true
+            // }
           rotateGround(game, platform8, keyA, keyS, positionPlatform8.x, positionPlatform8.y, joystick, canMoveCamera)
         break
         case 'platform_9':
-            if (isPlatform9Resetted === false) {
-                resetAngle()
-                isPlatform9Resetted = true
-            }
+            // if (isPlatform9Resetted === false) {
+            //     resetAngle()
+            //     isPlatform9Resetted = true
+            // }
           rotateGround(game, platform9, keyA, keyS, positionPlatform9.x, positionPlatform9.y, joystick, canMoveCamera)
         break
         case 'platform_10':
-            if (isPlatform10Resetted === false) {
-                resetAngle()
-                isPlatform10Resetted = true
-            }
+            // if (isPlatform10Resetted === false) {
+            //     resetAngle()
+            //     isPlatform10Resetted = true
+            // }
           rotateGround(game, platform10, keyA, keyS, positionPlatform10.x, positionPlatform10.y, joystick, canMoveCamera)
         break
         case 'platform_11':
-          if (isPlatform11Resetted === false) {
-              resetAngle()
-              isPlatform11Resetted = true
-          }
+          // if (isPlatform11Resetted === false) {
+          //     resetAngle()
+          //     isPlatform11Resetted = true
+          // }
           rotateGround(game, platform11, keyA, keyS, positionPlatform11.x, positionPlatform11.y, joystick, canMoveCamera)
         break
         case 'platform_12':
-          if (isPlatform12Resetted === false) {
-              resetAngle()
-              isPlatform12Resetted = true
-          }
+          // if (isPlatform12Resetted === false) {
+          //     resetAngle()
+          //     isPlatform12Resetted = true
+          // }
           rotateGround(game, platform12, keyA, keyS, positionPlatform12.x, positionPlatform12.y, joystick, canMoveCamera)
         break
         case 'platform_13':
-          if (isPlatform13Resetted === false) {
-              resetAngle()
-              isPlatform13Resetted = true
-          }
+          // if (isPlatform13Resetted === false) {
+          //     resetAngle()
+          //     isPlatform13Resetted = true
+          // }
           rotateGround(game, platform13, keyA, keyS, positionPlatform13.x, positionPlatform13.y, joystick, canMoveCamera)
         break
         case 'platform_14':
-          if (isPlatform14Resetted === false) {
-              resetAngle()
-              isPlatform14Resetted = true
-          }
+          // if (isPlatform14Resetted === false) {
+          //     resetAngle()
+          //     isPlatform14Resetted = true
+          // }
           rotateGround(game, platform14, keyA, keyS, positionPlatform14.x, positionPlatform14.y, joystick, canMoveCamera)
         break
         case 'platform_15':
-          if (isPlatform15Resetted === false) {
-              resetAngle()
-              isPlatform15Resetted = true
-          }
+          // if (isPlatform15Resetted === false) {
+          //     resetAngle()
+          //     isPlatform15Resetted = true
+          // }
           rotateGround(game, platform15, keyA, keyS, positionPlatform15.x, positionPlatform15.y, joystick, canMoveCamera)
         break
         case 'platform_16':
-          if (isPlatform16Resetted === false) {
-              resetAngle()
-              isPlatform16Resetted = true
-          }
+          // if (isPlatform16Resetted === false) {
+          //     resetAngle()
+          //     isPlatform16Resetted = true
+          // }
           rotateGround(game, platform16, keyA, keyS, positionPlatform16.x, positionPlatform16.y, joystick, canMoveCamera)
         break
         case 'platform_17':
-          if (isPlatform17Resetted === false) {
-              resetAngle()
-              isPlatform17Resetted = true
-          }
+          // if (isPlatform17Resetted === false) {
+          //     resetAngle()
+          //     isPlatform17Resetted = true
+          // }
           rotateGround(game, platform17, keyA, keyS, positionPlatform17.x, positionPlatform17.y, joystick, canMoveCamera)
         break
         default:
