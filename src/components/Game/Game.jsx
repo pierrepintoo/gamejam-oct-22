@@ -40,9 +40,13 @@ const Game = ({mousePos}) => {
   const windowH = window.innerHeight
   const windowW = window.innerWidth
   let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10
+  let platform11, platform12, platform13, platform14, platform15, platform16, platform17
   let isPlatform1Actived = false, isPlatform2Actived = false, isPlatform3Actived = false, isPlatform4Actived = false
   let isPlatform5Actived = false, isPlatform6Actived = false, isPlatform7Actived = false, isPlatform8Actived = false
   let isPlatform9Actived = false, isPlatform10Actived = false
+  let isPlatform11Actived = false, isPlatform12Actived = false, isPlatform13Actived = false, isPlatform14Actived = false
+  let isPlatform15Actived = false, isPlatform16Actived = false, isPlatform17Actived = false
+
   let keyA, keyS, keyD, keySPACE
   let abeilles = []
   let activePlatform = ""
@@ -57,9 +61,16 @@ const Game = ({mousePos}) => {
   const positionPlatform5 = {x: 100, y: -400}
   const positionPlatform6 = {x: -200, y: 300}
   const positionPlatform7 = {x: 500, y: 800}
-  const positionPlatform8 = {x: 200, y: 1300}
+  const positionPlatform8 = {x: -100, y: 1300}
   const positionPlatform9 = {x: -200, y: 1800}
   const positionPlatform10 = {x: -550, y: 2200}
+  const positionPlatform11 = {x: 500, y: 2200}
+  const positionPlatform12 = {x: 1200, y: 1800}
+  const positionPlatform13 = {x: 1100, y: 1350}
+  const positionPlatform14 = {x: 1300, y: 600}
+  const positionPlatform15 = {x: -1100, y: -100}
+  const positionPlatform16 = {x: 2100, y: 100}
+  const positionPlatform17 = {x: 600, y: -1300}
   const joystick = {x: 0, y: 0}
   let ambiance
   let ambianceForet
@@ -206,7 +217,7 @@ const Game = ({mousePos}) => {
 
               let moreHit = collisonListener(this)
 
-              const sao1 = [ 2, 3, 5, 6, 12, 13, 14, 20, 21, 22, 27, 28, 29, 34, 35, 36, 37 ];
+              // const sao1 = [ 2, 3, 5, 6, 12, 13, 14, 20, 21, 22, 27, 28, 29, 34, 35, 36, 37 ];
               // let frames
               // //  And insert the frames into the array:
               // for (var i = 0; i <= 50; i++)
@@ -268,10 +279,14 @@ const Game = ({mousePos}) => {
               
               // Moving platforms
               platform5.x = 200 + Math.sin(time * 0.001) * 200
-              platform6.x = -200 + Math.cos(time * 0.001) * 300
+              platform12.x = 1200 + Math.cos((time + 3500)* 0.001) * 300
+              platform14.x = 1400 + Math.cos((time + 3500)* 0.001) * 600
 
-              platform7.rotation = time * 0.001
+              platform1.rotation = (time + 67189) * (-0.001)
+              platform3.rotation = (time + 7814) * 0.001
+              platform6.rotation = time * 0.001
               platform8.rotation = (time + 1000) * (-0.001)
+              platform13.rotation = (time + 3000) * 0.001
 
               // Galette that rotate with velocity (because friction = 0)
               setRotationWithVelocity()
@@ -304,6 +319,13 @@ const Game = ({mousePos}) => {
                 platform8,
                 platform9,
                 platform10,
+                platform11,
+                platform12,
+                platform13,
+                platform14,
+                platform15,
+                platform16,
+                platform17,
                 keyA,
                 keyS,
                 positionPlatform1,
@@ -316,6 +338,13 @@ const Game = ({mousePos}) => {
                 positionPlatform8,
                 positionPlatform9,
                 positionPlatform10,
+                positionPlatform11,
+                positionPlatform12,
+                positionPlatform13,
+                positionPlatform14,
+                positionPlatform15,
+                positionPlatform16,
+                positionPlatform17,
                 joystick
               )
             },
@@ -344,18 +373,6 @@ const Game = ({mousePos}) => {
             // console.log(countHit)
             countHit += 1
             return (countHit)
-            // setOnHit(onHit + 1)
-            // event.pairs[0].bodyA.gameObject.alpha =.5
-            // game.remove(event.pairs[0].bodyA)
-            //event.pairs[0].bodyA.gameObject.setPosition(0,0)
-            //this.add(event.pairs[0].bodyA)
-    
-    
-          // event.pairs[0].bodyA.gameObject.setCollisionCategory(cat0);
-                    //event.pairs[0].bodyA.gameObject.setCollisionCategory(cat0);
-    
-            //HERE MY PROBLEM i want that the player collide with nothing so the enemy normaly pass trough but can't go outside the screen and that 's the problem'
-            //event.pairs[0].bodyA.gameObject.setCollidesWith()
           }
        }		
           }		
@@ -377,7 +394,14 @@ const Game = ({mousePos}) => {
       platform7 = createPlatform(game, positionPlatform7.x, positionPlatform7.y, 'platform_7')
       platform8 = createPlatform(game, positionPlatform8.x, positionPlatform8.y, 'platform_8')
       platform9 = createPlatform(game, positionPlatform9.x, positionPlatform9.y, 'platform_9')
-      platform10 = createPlatform(game, positionPlatform10.x, positionPlatform10.y, 'platform_10', true)
+      platform10 = createPlatform(game, positionPlatform10.x, positionPlatform10.y, 'platform_10')
+      platform11 = createPlatform(game, positionPlatform11.x, positionPlatform11.y, 'platform_11')
+      platform12 = createPlatform(game, positionPlatform12.x, positionPlatform12.y, 'platform_12')
+      platform13 = createPlatform(game, positionPlatform13.x, positionPlatform13.y, 'platform_13')
+      platform14 = createPlatform(game, positionPlatform14.x, positionPlatform14.y, 'platform_14')
+      platform15 = createPlatform(game, positionPlatform15.x, positionPlatform15.y, 'platform_15')
+      platform16 = createPlatform(game, positionPlatform16.x, positionPlatform16.y, 'platform_16')
+      platform17 = createPlatform(game, positionPlatform17.x, positionPlatform17.y, 'platform_17')
 
     }
 
@@ -474,6 +498,34 @@ const Game = ({mousePos}) => {
           isPlatform10Actived = true
           activePlatform = 'platform_10'
           jumpingCount = 0
+        } else if (platformName === "platform_11" && isPlatform11Actived === false) {
+          isPlatform11Actived = true
+          activePlatform = 'platform_11'
+          jumpingCount = 0
+        } else if (platformName === "platform_12" && isPlatform12Actived === false) {
+          isPlatform12Actived = true
+          activePlatform = 'platform_12'
+          jumpingCount = 0
+        } else if (platformName === "platform_13" && isPlatform13Actived === false) {
+          isPlatform13Actived = true
+          activePlatform = 'platform_13'
+          jumpingCount = 0
+        } else if (platformName === "platform_14" && isPlatform14Actived === false) {
+          isPlatform14Actived = true
+          activePlatform = 'platform_14'
+          jumpingCount = 0
+        } else if (platformName === "platform_15" && isPlatform15Actived === false) {
+          isPlatform15Actived = true
+          activePlatform = 'platform_15'
+          jumpingCount = 0
+        } else if (platformName === "platform_16" && isPlatform16Actived === false) {
+          isPlatform16Actived = true
+          activePlatform = 'platform_16'
+          jumpingCount = 0
+        } else if (platformName === "platform_17" && isPlatform17Actived === false) {
+          isPlatform17Actived = true
+          activePlatform = 'platform_17'
+          jumpingCount = 0
         } else if (platformName === "platform_1") {
           jumpingCount = 0
         } else if (platformName === "platform_2") {
@@ -495,15 +547,9 @@ const Game = ({mousePos}) => {
         } else if (platformName === "platform_10") {
           jumpingCount = 0
         }
+        jumpingCount = 0
       })
     }
-
-    // const handleCollideWithAbeille = (e) => {
-    //   const objectCollided = e.bodyB.gameObject.texture.key
-    //   if (objectCollided === "abeille") {
-    //     console.log("abeille collided")
-    //   }
-    // }
 
     usePhaserGame(config)
 
