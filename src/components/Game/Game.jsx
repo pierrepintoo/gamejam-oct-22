@@ -39,6 +39,8 @@ const Game = ({mousePos}) => {
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
+  let canMoveCamera = false
+  let unzoomCameraTimeout
   let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10
   let platform11, platform12, platform13, platform14, platform15, platform16, platform17
   let isPlatform1Actived = false, isPlatform2Actived = false, isPlatform3Actived = false, isPlatform4Actived = false
@@ -211,6 +213,9 @@ const Game = ({mousePos}) => {
                 if (e.key === "a") {
                   jumpGalette(this)
                 }
+                if (e.key === "d") {
+                  accelerateGalette(this)
+                }
               })
 
               galetteImage = getGaletteImage()
@@ -345,7 +350,8 @@ const Game = ({mousePos}) => {
                 positionPlatform15,
                 positionPlatform16,
                 positionPlatform17,
-                joystick
+                joystick,
+                canMoveCamera
               )
             },
             render: function() {
@@ -435,13 +441,17 @@ const Game = ({mousePos}) => {
     }
 
     const setCamerasParams = (game, objectToFollow) => {
-      // game.cameras.main.startFollow(objectToFollow) 
       // game.cameras.main.zoom = 1
       // console.log(game.cameras.main.shake)
       game.cameras.main.zoom = 0.2
       setTimeout(() => {
         game.cameras.main.zoomTo(1, 4000, "Quart.easeInOut")
-        game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut');
+        game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
+        });
+        setTimeout(() => {
+          canMoveCamera = true
+          console.log(game.cameras.main.startFollow(objectToFollow)) 
+        }, 4050)
 
       }, 1000)
       // game.cameras.main.zoom = 0.6
@@ -449,11 +459,31 @@ const Game = ({mousePos}) => {
       // game.cameras.main.y += 200
     }
 
-    const jumpGalette = (game) => {
-      if (jumpingCount < 2) {
+    const accelerateGalette = () => {
+      console.log('accelerate')
+      if (canMoveCamera) {
+        if (galette.body.velocity.x > 0) {
+          galette.setVelocityX(10)
+        } else if (galette.body.velocity.x < 0) {
+          galette.setVelocityX(-10)
+        }
+      }
+    }
+
+    const jumpGalette = async (game) => {
+      if (jumpingCount < 2 && canMoveCamera) {
         jumpingCount += 1
         galette.setVelocityY(-10.5)
         sautSound.play()
+        // console.log(game.cameras.main.zoomEffect.isRunning)
+        // if (game.cameras.main.zoomEffect.isRunning === false && canMoveCamera) {
+        //   game.cameras.main.zoomTo(0.7, 400, "Quad.easeOut")
+        //   setTimeout(() => {
+        //     game.cameras.main.zoomTo(1, 400, "Quad.easeOut")
+        //   }, 450)
+          
+          
+        // }
         // playSound(game, sautSound, ambianceVolume)
       }
     }

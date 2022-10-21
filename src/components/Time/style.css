@@ -5,8 +5,12 @@
     left: 80px;
     background-color: transparent;
     font-size: 48px;
-    color: #ffffff;
+    color: #377476;
     font-weight: 700;
+    -webkit-text-shadow: 0px 0px 50px -4px #377476; 
+    text-shadow: 0px 0px 50px -4px #377476;
+    /* background-image: url('./fog.png'); */
+    /* background-size: 2%; */
     /* font-stretch: extra-expanded; */
 }
 
