@@ -16,7 +16,6 @@ import Time from "../Time/Time";
 import Notice from "../Notice/Notice";
 import { CSSTransition } from "react-transition-group";
 import './style.css'
-import EndScreen from "../EndScreen/EndScreen";
 
 const Game = ({mousePos, handleGameOver, handleEndGame}) => {
 

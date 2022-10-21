@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useTimer } from "react-timer-and-stopwatch";
-import EndScreen from "../EndScreen/EndScreen.jsx";
 
 import './style.css'
 
