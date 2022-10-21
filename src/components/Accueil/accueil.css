@@ -6,9 +6,46 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 6em;
+    /* gap: 6em; */
     align-items: center;
     background-image: url(../../../public/assets/bg/background_accueil.jpg);
     background-size: cover;
     background-position: center;
+}
+
+.title {
+    width: 600px;
+}
+
+a {
+    margin-top: 1.5em;
+    text-decoration: none;
+    font-size: 4em;
+    color: #072A44;
+    transition: all .2s ease;
+    border-bottom: solid 2px transparent;
+    margin-bottom: 0em;
+}
+
+a:hover {
+    color: #FFBB7B;
+    border-bottom: solid 2px #FFBB7B;
+}
+
+.platform {
+    margin-top: 1em;
+    width: 20%;
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-10px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
 }
