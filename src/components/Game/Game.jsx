@@ -39,7 +39,7 @@ const Game = ({mousePos, handleGameOver}) => {
   const phaserGameRef = React.useRef(null);
   const windowH = window.innerHeight
   const windowW = window.innerWidth
-  let canMoveCamera = true
+  let canMoveCamera = false
   let unzoomCameraTimeout
   let line, ground, galette, galetteImage, platform1, platform2, platform3, platform4, platform5, platform6, platform7, platform8, platform9, platform10
   let platform11, platform12, platform13, platform14, platform15, platform16, platform17
@@ -217,10 +217,7 @@ const Game = ({mousePos, handleGameOver}) => {
                 if (e.key === "a") {
                   jumpGalette(this)
                 }
-                if (e.key === "x") {
-                  accelerateGalette(this)
-                }
-                console.log(e.key)
+
                 if (e.key === "w") {
                   console.log('FDNOOFKSDN')
                   showGameOverScreen()
@@ -459,8 +456,8 @@ const Game = ({mousePos, handleGameOver}) => {
       // game.cameras.main.zoom = 0.2
 
       // ON START CAMERA
-      game.cameras.main.zoom = 0.45
-      game.cameras.main.centerOn(galette.x + 200, 1500)
+      game.cameras.main.zoom = 0.7
+      game.cameras.main.centerOn(galette.x + 400, 1500)
       setTimeout(() => {
         game.cameras.main.pan(galette.x, galette.y, 4000, 'Quart.easeInOut', false, (ctx) => {
         });
