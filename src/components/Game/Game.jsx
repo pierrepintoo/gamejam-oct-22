@@ -417,7 +417,7 @@ const Game = ({mousePos}) => {
       if (jumpingCount < 2) {
         jumpingCount += 1
         galette.setVelocityY(-10.5)
-        playSound(game, sautSound, ambianceVolume)
+        // playSound(game, sautSound, ambianceVolume)
       }
     }
 
